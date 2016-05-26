@@ -71,7 +71,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
      */
     public function theFlagIsTurnedOff($name)
     {
-        MockClient::setOff($name);
+        MockFeatureRequester::setOff($name);
     }
 
     /**
@@ -79,7 +79,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
      */
     public function theFlagIsTurnedOn($name)
     {
-        MockClient::setOn($name);
+        MockFeatureRequester::setOn($name);
     }
     
 }

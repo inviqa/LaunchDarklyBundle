@@ -3,3 +3,6 @@ framework:
     test: ~
     router:
         resource: "routing.yml"
+
+parameters:
+    inviqa_launchdarkly.feature_requester.class: "MockFeatureRequester"

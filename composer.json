@@ -7,7 +7,8 @@
         }
     ],
     "require": {
-        "symfony/framework-bundle": "^2.7 || ^3.0"
+        "symfony/framework-bundle": "^2.7 || ^3.0",
+        "launchdarkly/launchdarkly-php": "^0.7.0"
     },
     "autoload": {
         "psr-4": {
