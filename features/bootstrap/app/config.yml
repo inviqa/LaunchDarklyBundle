@@ -1,0 +1,5 @@
+framework:
+    secret: "Secrets, silent, stony sit in the dark palaces of both our hearts: secrets weary of their tyranny: tyrants willing to be dethroned."
+    test: ~
+    router:
+        resource: "routing.yml"
