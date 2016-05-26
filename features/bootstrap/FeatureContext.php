@@ -58,11 +58,28 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     }
 
     /**
-     * @Then I should see :arg1
+     * @Then I should see :content
      */
-    public function iShouldSee($arg1)
+    public function iShouldSee($content)
     {
-        assert(strpos($this->mink->getSession()->getPage()->getContent(), $arg1) !== false);
+        assert(strpos($this->mink->getSession()->getPage()->getContent(), $content) !== false);
     }
 
+
+    /**
+     * @Given the :name flag is turned off
+     */
+    public function theFlagIsTurnedOff($name)
+    {
+        MockClient::setOff($name);
+    }
+
+    /**
+     * @Given the :name flag is turned on
+     */
+    public function theFlagIsTurnedOn($name)
+    {
+        MockClient::setOn($name);
+    }
+    
 }

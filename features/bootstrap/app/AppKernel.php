@@ -1,5 +1,6 @@
 <?php
 
+use Inviqa\LaunchDarklyBundle\InviqaLaunchDarklyBundle;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -9,7 +10,7 @@ class AppKernel extends Kernel
     {
         return array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            //new Acme\StandaloneBundle\AcmeStandaloneBundle(),
+            new InviqaLaunchDarklyBundle,
         );
     }
 
