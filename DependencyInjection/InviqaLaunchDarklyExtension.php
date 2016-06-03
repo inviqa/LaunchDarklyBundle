@@ -19,6 +19,9 @@ class InviqaLaunchDarklyExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $configuration = $this->getConfiguration($configs, $container);
+        $config = $this->processConfiguration($configuration, $configs);
+
         $configDirectory = __DIR__ . '/../Resources/config';
 
         $loader = new Loader\XmlFileLoader(
@@ -27,5 +30,6 @@ class InviqaLaunchDarklyExtension extends Extension
         );
 
         $loader->load('services.xml');
+        $container->setParameter('inviqa_launchdarkly.feature_requester.api_key', $config['api_key']);
     }
 }

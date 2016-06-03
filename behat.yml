@@ -1,4 +1,9 @@
 default:
+    suites:
+        default:
+            contexts:
+                - FeatureContext:
+                    ldClient:   '@inviqa_launchdarkly.client'
     extensions:
         Behat\Symfony2Extension: ~
         Behat\MinkExtension:

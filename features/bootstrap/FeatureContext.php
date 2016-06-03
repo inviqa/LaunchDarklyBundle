@@ -6,6 +6,8 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkAwareContext;
+use LaunchDarkly\LDClient;
+use LaunchDarkly\LDUser;
 
 /**
  * Defines application features from the specific context.
@@ -17,6 +19,10 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
      */
     private $mink;
     private $minkParameters;
+    /**
+     * @var LDClient
+     */
+    private $ldClient;
 
     /**
      * Sets Mink instance.
@@ -45,8 +51,9 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
      * You can also pass arbitrary arguments to the
      * context constructor through behat.yml.
      */
-    public function __construct()
+    public function __construct(LDClient $ldClient)
     {
+        $this->ldClient = $ldClient;
     }
 
     /**
@@ -82,4 +89,20 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
         MockFeatureRequester::setOn($name);
     }
     
+
+    /**
+     * @When I ask if a flag is on for a user
+     */
+    public function iAskIfAFlagIsOnForAUser()
+    {
+        $this->ldClient->getFlag('new-homepage-content', new LDUser('user-id'));
+    }
+
+    /**
+     * @Then the API key I have configured should be used
+     */
+    public function theApiKeyIHaveConfiguredShouldBeUsed()
+    {
+        assert(MockFeatureRequester::$apiKey == 'APIKEY');
+    }
 }

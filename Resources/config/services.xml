@@ -11,7 +11,7 @@
     <services>
 
         <service id="inviqa_launchdarkly.client" class="LaunchDarkly\LDClient">
-            <argument>APIKEYGOESHERE</argument>
+            <argument>%inviqa_launchdarkly.feature_requester.api_key%</argument>
             <argument type="collection">
                 <argument key="feature_requester_class">%inviqa_launchdarkly.feature_requester.class%</argument>
             </argument>

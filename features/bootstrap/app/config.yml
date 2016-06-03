@@ -4,5 +4,8 @@ framework:
     router:
         resource: "routing.yml"
 
+inviqa_launch_darkly:
+    api_key: APIKEY
+
 parameters:
     inviqa_launchdarkly.feature_requester.class: "MockFeatureRequester"
