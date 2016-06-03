@@ -31,5 +31,15 @@ class InviqaLaunchDarklyExtension extends Extension
 
         $loader->load('services.xml');
         $container->setParameter('inviqa_launchdarkly.feature_requester.api_key', $config['api_key']);
+
+        $keys = ['base_uri', 'feature_requester_class', 'timeout', 'connect_timeout', 'capacity', 'events', 'defaults'];
+        $container->setParameter('inviqa_launchdarkly.feature_requester.options',
+            array_filter(
+                array_combine(
+                    $keys,
+                    array_map(function($key) use ($config) {return isset($config[$key]) ? $config[$key] : null;}, $keys)
+                )
+            )
+        );
     }
 }

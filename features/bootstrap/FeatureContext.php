@@ -1,10 +1,7 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkAwareContext;
 use LaunchDarkly\LDClient;
 use LaunchDarkly\LDUser;
@@ -99,10 +96,66 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     }
 
     /**
-     * @Then the API key I have configured should be used
+     * @Then the requester I have configured should be used
      */
-    public function theApiKeyIHaveConfiguredShouldBeUsed()
+    public function theRequesterIHaveConfiguredShouldBeUsed()
     {
-        assert(MockFeatureRequester::$apiKey == 'APIKEY');
+        assert(MockFeatureRequester::$usedForKey);
+    }
+
+    /**
+     * @Then the API key I have configured should be set to :value
+     */
+    public function theApiKeyIHaveConfiguredShouldBeSetTo($value)
+    {
+        assert(MockFeatureRequester::$apiKey == $value);
+    }
+
+    /**
+     * @Then the base uri I have configured should be set to :value
+     */
+    public function theBaseUriIHaveConfiguredShouldBeSetTo($value)
+    {
+        assert(MockFeatureRequester::$baseUri == $value);
+    }
+
+    /**
+     * @Then the timeout I have configured should be set to :value
+     */
+    public function theTimeoutIHaveConfiguredShouldBeSetTo($value)
+    {
+        assert(MockFeatureRequester::$timeout == $value);
+    }
+
+    /**
+     * @Then the connect_timeout I have configured should be set to :value
+     */
+    public function theConnectTimeoutIHaveConfiguredShouldBeSetTo($value)
+    {
+        assert(MockFeatureRequester::$connectTimeout == $value);
+    }
+
+    /**
+     * @Then the capacity I have configured should be set to :arg1
+     */
+    public function theCapacityIHaveConfiguredShouldBeSetTo($value)
+    {
+        assert(MockFeatureRequester::$capacity == $value);
+    }
+
+    /**
+     * @Then the events I have configured should be set to :value
+     */
+    public function theEventsIHaveConfiguredShouldBeSetTo($value)
+    {
+        assert(MockFeatureRequester::$events == true);
+    }
+
+    /**
+     * @Then the defaults I have configured should be used
+     */
+    public function theDefaultsIHaveConfiguredShouldBeUsed()
+    {
+        assert(MockFeatureRequester::$defaults == ['flag_one' => true, 'flag_two' => false]);
     }
 }

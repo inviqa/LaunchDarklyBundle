@@ -6,6 +6,12 @@ framework:
 
 inviqa_launch_darkly:
     api_key: APIKEY
-
-parameters:
-    inviqa_launchdarkly.feature_requester.class: "MockFeatureRequester"
+    base_uri: "http://base.example.com"
+    feature_requester_class: "MockFeatureRequester"
+    timeout: 20
+    connect_timeout: 10
+    capacity: 800
+    events: true
+    defaults:
+      flag_one: true
+      flag_two: false

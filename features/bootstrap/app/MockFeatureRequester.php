@@ -4,27 +4,29 @@ use LaunchDarkly\FeatureRequester;
 
 class MockFeatureRequester implements FeatureRequester
 {
+    public static $capacity;
+    public static $events;
+    public static $defaults;
     private static $flags;
-    /**
-     * @var
-     */
-    private $baseUri;
-    /**
-     * @var
-     */
+    public static $baseUri;
     public static $apiKey;
-    /**
-     * @var
-     */
+    public static $connectTimeout;
     private $options;
+    public static $usedForKey = false;
+    public static $timeout;
 
     /**
      * MockFeatureRequester constructor.
      */
     public function __construct($baseUri, $apiKey, $options)
     {
-        $this->baseUri = $baseUri;
+        self::$baseUri = $baseUri;
         self::$apiKey = $apiKey;
+        self::$timeout = $options['timeout'];
+        self::$connectTimeout = $options['connect_timeout'];
+        self::$capacity = $options['capacity'];
+        self::$events = $options['events'];
+        self::$defaults = $options['defaults'];
         $this->options = $options;
     }
 
@@ -40,6 +42,7 @@ class MockFeatureRequester implements FeatureRequester
 
     public function get($key)
     {
+        self::$usedForKey = true;
         return [
             "name" => $key,
             "key" => $key,

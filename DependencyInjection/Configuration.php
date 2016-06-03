@@ -4,7 +4,6 @@ namespace Inviqa\LaunchDarklyBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Config\Definition\NodeInterface;
 
 class Configuration implements ConfigurationInterface
 {
@@ -19,6 +18,13 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('api_key')
                     ->isRequired()
                 ->end()
+                ->scalarNode('base_uri')->end()
+                ->scalarNode('feature_requester_class')->end()
+                ->integerNode('timeout')->end()
+                ->integerNode('connect_timeout')->end()
+                ->integerNode('capacity')->end()
+                ->booleanNode('events')->end()
+                ->arrayNode('defaults')->useAttributeAsKey('flag')->prototype('boolean')->end()->end()
             ->end();
 
         return $treeBuilder;
