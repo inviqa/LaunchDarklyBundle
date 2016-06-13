@@ -1,5 +1,6 @@
 <?php
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\MinkAwareContext;
@@ -66,7 +67,9 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
      */
     public function iShouldSee($content)
     {
-        assert(strpos($this->mink->getSession()->getPage()->getContent(), $content) !== false);
+        if(strpos($this->mink->getSession()->getPage()->getContent(), $content) === false) {
+            throw new RuntimeException("Expected content not found ($content)");
+        }
     }
 
 
@@ -157,5 +160,13 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     public function theDefaultsIHaveConfiguredShouldBeUsed()
     {
         assert(MockFeatureRequester::$defaults == ['flag_one' => true, 'flag_two' => false]);
+    }
+
+    /**
+     * @When I visit the template page
+     */
+    public function iVisitTheTemplatePage()
+    {
+        $this->mink->getSession()->visit('/templated');
     }
 }

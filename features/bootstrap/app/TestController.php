@@ -12,4 +12,8 @@ class TestController extends Controller
         }
         return new Response("the old homepage content");
     }
+
+    public function templatedAction() {
+        return $this->render('index.html.twig');
+    }
 }

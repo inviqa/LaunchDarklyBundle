@@ -15,6 +15,13 @@
             <argument>%inviqa_launchdarkly.feature_requester.options%</argument>
         </service>
 
+        <service id="inviqa_launchdarkly.twig_extension"
+                 class="Inviqa\LaunchDarklyBundle\Twig\FlagExtension"
+                 public="false">
+            <argument type="service" id="inviqa_launchdarkly.client"/>
+            <tag name="twig.extension" />
+        </service>
+
     </services>
 
 </container>
