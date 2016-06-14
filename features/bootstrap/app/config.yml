@@ -15,3 +15,15 @@ inviqa_launch_darkly:
     defaults:
       flag_one: true
       flag_two: false
+
+services:
+    inviqa_launchdarkly.user:
+        class: LaunchDarkly\LDUser
+        arguments: ["user-id"]
+    inviqa_launchdarkly.test_service:
+        class: OuterService
+        arguments: ["@=toggle('new-service-content', 'inviqa_launchdarkly.new_test_service', 'inviqa_launchdarkly.old_test_service')"]
+    inviqa_launchdarkly.new_test_service:
+        class: NewTestService
+    inviqa_launchdarkly.old_test_service:
+        class: OldTestService

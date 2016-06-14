@@ -7,3 +7,8 @@ templated:
     path: /templated
     defaults: {_controller: TestController::templatedAction }
     methods: [GET]
+
+service:
+    path: /service
+    defaults: {_controller: TestController::serviceAction }
+    methods: [GET]

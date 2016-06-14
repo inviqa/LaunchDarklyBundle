@@ -16,4 +16,8 @@ class TestController extends Controller
     public function templatedAction() {
         return $this->render('index.html.twig');
     }
+
+    public function serviceAction() {
+        return new Response($this->get('inviqa_launchdarkly.test_service')->getContent());
+    }
 }

@@ -169,4 +169,12 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     {
         $this->mink->getSession()->visit('/templated');
     }
+
+    /**
+     * @When I visit the service page
+     */
+    public function iVisitTheServicePage()
+    {
+        $this->mink->getSession()->visit('/service');
+    }
 }
