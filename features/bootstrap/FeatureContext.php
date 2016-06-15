@@ -1,17 +1,21 @@
 <?php
 
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\MinkAwareContext;
+use Behat\Symfony2Extension\Context\KernelDictionary;
 use LaunchDarkly\LDClient;
 use LaunchDarkly\LDUser;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Defines application features from the specific context.
  */
 class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareContext
 {
+    use KernelDictionary;
     /**
      * @var \Behat\Mink\Mink
      */
@@ -52,6 +56,12 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     public function __construct(LDClient $ldClient)
     {
         $this->ldClient = $ldClient;
+    }
+
+    /** @BeforeScenario */
+    public function before(BeforeScenarioScope $scope)
+    {
+        $this->getKernel()->clearConfig();
     }
 
     /**
@@ -107,7 +117,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     }
 
     /**
-     * @Then the API key I have configured should be set to :value
+     * @Then the api_key I have configured should be set to :value
      */
     public function theApiKeyIHaveConfiguredShouldBeSetTo($value)
     {
@@ -115,7 +125,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     }
 
     /**
-     * @Then the base uri I have configured should be set to :value
+     * @Then the base_uri I have configured should be set to :value
      */
     public function theBaseUriIHaveConfiguredShouldBeSetTo($value)
     {
@@ -176,5 +186,49 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     public function iVisitTheServicePage()
     {
         $this->mink->getSession()->visit('/service');
+    }
+
+    /**
+     * @Given I have configured :arg1 as :arg2
+     */
+    public function iHaveConfiguredAs($arg1, $arg2)
+    {
+        $this->getKernel()->loadConfig(function(ContainerBuilder $container) use ($arg1, $arg2){
+            $container->loadFromExtension('inviqa_launch_darkly', [$arg1 => $arg2]);
+        });
+    }
+
+    /**
+     * @Given I have configured :key of :type as :value
+     */
+    public function iHaveConfiguredOfAs($key, $type, $value)
+    {
+        switch ($type) {
+            case 'int':
+                $castValue = (int) $value;
+                break;
+            case 'boolean':
+                if ($value === "true") $castValue = true; else $castValue = false;
+                break;
+            default:
+                $castValue = $value;
+        }
+
+        $this->getKernel()->loadConfig(function(ContainerBuilder $container) use ($key, $castValue){
+            $container->loadFromExtension('inviqa_launch_darkly', [$key => $castValue]);
+        });
+    }
+
+    /**
+     * @Given I have configured defaults
+     */
+    public function iHaveConfiguredDefaults()
+    {
+        $this->getKernel()->loadConfig(function(ContainerBuilder $container) {
+            $container->loadFromExtension('inviqa_launch_darkly', ['defaults' => [
+                'flag_one' =>  true,
+                'flag_two' =>  false,
+            ]]);
+        });
     }
 }

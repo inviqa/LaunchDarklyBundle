@@ -7,18 +7,20 @@ Feature: As a developer
     Then the requester I have configured should be used
 
   Scenario: Setting defaults using the config file
+    Given I have configured defaults
     When I ask if a flag is on for a user
     Then the defaults I have configured should be used
 
   Scenario Outline: Setting configuration options using the config file
+    Given I have configured "<option>" of "<type>" as "<value>"
     When I ask if a flag is on for a user
     Then the <option> I have configured should be set to "<value>"
 
-  Examples:
-    | option           | value                   |
-    |  API key         | APIKEY                  |
-    |  base uri        | http://base.example.com |
-    |  timeout         | 20                      |
-    |  connect_timeout | 10                      |
-    |  capacity        | 800                     |
-    |  events          | true                    |
+    Examples:
+      | option          | value                   | type    |
+      | api_key         | ANOTHERAPIKEY           | string  |
+      | base_uri        | http://base.example.com | string  |
+      | timeout         | 20                      | int     |
+      | connect_timeout | 10                      | int     |
+      | capacity        | 800                     | int     |
+      | events          | true                    | boolean |

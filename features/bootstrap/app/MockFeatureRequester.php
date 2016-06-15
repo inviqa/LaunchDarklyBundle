@@ -25,8 +25,8 @@ class MockFeatureRequester implements FeatureRequester
         self::$timeout = $options['timeout'];
         self::$connectTimeout = $options['connect_timeout'];
         self::$capacity = $options['capacity'];
-        self::$events = $options['events'];
-        self::$defaults = $options['defaults'];
+        self::$events = isset($options['events']) ? $options['events'] : null;
+        self::$defaults = isset($options['defaults']) ? $options['defaults'] : null;
         $this->options = $options;
     }
 
