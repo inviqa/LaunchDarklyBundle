@@ -13,9 +13,6 @@ services:
         class: LDClientWrapper
         decorates: inviqa_launchdarkly.inner_client
         arguments: ["@inviqa_launchdarkly.decorated_client.inner"]
-    inviqa_launchdarkly.user:
-        class: LaunchDarkly\LDUser
-        arguments: ["user-id"]
     inviqa_launchdarkly.test_service:
         class: OuterService
         arguments: ["@=toggle('new-service-content', 'inviqa_launchdarkly.new_test_service', 'inviqa_launchdarkly.old_test_service')"]
