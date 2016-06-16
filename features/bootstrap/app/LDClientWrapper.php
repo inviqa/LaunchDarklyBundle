@@ -1,9 +1,10 @@
 <?php
 
 use Inviqa\LaunchDarklyBundle\Client\Client;
+use Inviqa\LaunchDarklyBundle\Client\ClientDecorator;
 use LaunchDarkly\LDClient;
 
-class LDClientWrapper implements Client
+class LDClientWrapper extends ClientDecorator implements Client
 {
     private $inner;
     static public $lastUser;
@@ -21,26 +22,6 @@ class LDClientWrapper implements Client
     public function toggle($key, $user, $default = false) {
         self::$lastUser = $user;
         return $this->inner->toggle($key, $user, $default);
-    }
-
-    public function setOffline() {
-        $this->inner->setOffline();
-    }
-
-    public function setOnline() {
-        $this->inner->setOnline();
-    }
-
-    public function isOffline() {
-        return $this->inner->isOffline();
-    }
-
-    public function track($eventName, $user, $data) {
-        $this->inner->track($eventName, $user, $data);
-    }
-
-    public function identify($user) {
-        $this->inner->identify($user);
     }
 
     public function isOn($key, $default = false)
