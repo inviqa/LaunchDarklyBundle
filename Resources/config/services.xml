@@ -10,10 +10,17 @@
 
     <services>
 
-        <service id="inviqa_launchdarkly.client" class="LaunchDarkly\LDClient">
+        <service id="inviqa_launchdarkly.inner_client" class="LaunchDarkly\LDClient">
             <argument>%inviqa_launchdarkly.feature_requester.api_key%</argument>
             <argument>%inviqa_launchdarkly.feature_requester.options%</argument>
         </service>
+
+        <service id="inviqa_launchdarkly.client" class="Inviqa\LaunchDarklyBundle\Client\UserProvidingClient">
+            <argument type="service" id="inviqa_launchdarkly.inner_client"/>
+            <argument type="service" id="inviqa_launchdarkly.id_provider"/>
+        </service>
+
+        <service id="inviqa_launchdarkly.id_provider" class="StaticIdProvider"/>
 
         <service id="inviqa_launchdarkly.twig_extension"
                  class="Inviqa\LaunchDarklyBundle\Twig\FlagExtension"

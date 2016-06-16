@@ -1,11 +1,12 @@
 <?php
 
-use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\MinkExtension\Context\MinkAwareContext;
 use Behat\Symfony2Extension\Context\KernelDictionary;
+use Inviqa\LaunchDarklyBundle\Client\Client;
 use LaunchDarkly\LDClient;
 use LaunchDarkly\LDUser;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -53,7 +54,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
      * You can also pass arbitrary arguments to the
      * context constructor through behat.yml.
      */
-    public function __construct(LDClient $ldClient)
+    public function __construct(Client $ldClient)
     {
         $this->ldClient = $ldClient;
     }
@@ -70,6 +71,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     public function iVisitTheHomepage()
     {
         $this->mink->getSession()->visit('/');
+
     }
 
     /**
@@ -98,7 +100,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     {
         MockFeatureRequester::setOn($name);
     }
-    
+
 
     /**
      * @When I ask if a flag is on for a user
@@ -230,5 +232,21 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
                 'flag_two' =>  false,
             ]]);
         });
+    }
+
+    /**
+     * @Given I fix the user id to :arg1
+     */
+    public function iFixTheUserIdTo($arg1)
+    {
+        $this->getKernel()->getContainer()->get('inviqa_launchdarkly.id_provider')->setUserId($arg1);
+    }
+
+    /**
+     * @Then :arg1 should have been used to identify me
+     */
+    public function shouldHaveBeenUsedToIdentifyMe($arg1)
+    {
+        assert(LDClientWrapper::$lastUser->getKey() == $arg1);
     }
 }

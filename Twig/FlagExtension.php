@@ -2,14 +2,14 @@
 
 namespace Inviqa\LaunchDarklyBundle\Twig;
 
-use LaunchDarkly\LDClient;
+use Inviqa\LaunchDarklyBundle\Client\Client;
 use LaunchDarkly\LDUser;
 
 class FlagExtension extends \Twig_Extension
 {
     private $ldClient;
 
-    public function __construct(LDClient $ldClient)
+    public function __construct(Client $ldClient)
     {
         $this->ldClient = $ldClient;
     }
@@ -21,9 +21,9 @@ class FlagExtension extends \Twig_Extension
         ];
     }
 
-    public function isFlagOn($key, $userId)
+    public function isFlagOn($key)
     {
-        return $this->ldClient->getFlag($key, new LDUser($userId));
+        return $this->ldClient->isOn($key);
     }
     
     public function getName()

@@ -9,6 +9,10 @@ inviqa_launch_darkly:
     feature_requester_class: "MockFeatureRequester"
 
 services:
+    inviqa_launchdarkly.decorated_client:
+        class: LDClientWrapper
+        decorates: inviqa_launchdarkly.inner_client
+        arguments: ["@inviqa_launchdarkly.decorated_client.inner"]
     inviqa_launchdarkly.user:
         class: LaunchDarkly\LDUser
         arguments: ["user-id"]
@@ -19,3 +23,5 @@ services:
         class: NewTestService
     inviqa_launchdarkly.old_test_service:
         class: OldTestService
+    inviqa_launchdarkly.id_provider:
+        class: StaticIdProvider

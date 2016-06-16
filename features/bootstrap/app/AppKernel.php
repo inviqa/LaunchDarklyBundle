@@ -29,32 +29,14 @@ class AppKernel extends Kernel
     public function loadConfig(\Closure $closure)
     {
         $this->loadingClosure = $closure;
+        $this->booted = false;
         $this->boot();
     }
 
     public function clearConfig()
     {
         unset($this->loadingClosure);
-    }
-
-    /**
-     * Remove check to allow rebooting the kernel when passing new config options
-     */
-    public function boot()
-    {
-        if ($this->loadClassCache) {
-            $this->doLoadClassCache($this->loadClassCache[0], $this->loadClassCache[1]);
-        }
-        // init bundles
-        $this->initializeBundles();
-        // init container
-        $this->initializeContainer();
-        foreach ($this->getBundles() as $bundle) {
-            $bundle->setContainer($this->container);
-            $bundle->boot();
-        }
-
-        $this->booted = true;
+        $this->booted = false;
     }
 
     /**
