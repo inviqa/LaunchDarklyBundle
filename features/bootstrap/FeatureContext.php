@@ -151,7 +151,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     }
 
     /**
-     * @Then the capacity I have configured should be set to :arg1
+     * @Then the capacity I have configured should be set to :value
      */
     public function theCapacityIHaveConfiguredShouldBeSetTo($value)
     {
@@ -163,7 +163,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
      */
     public function theEventsIHaveConfiguredShouldBeSetTo($value)
     {
-        assert(MockFeatureRequester::$events == true);
+        assert(MockFeatureRequester::$events == $value);
     }
 
     /**
@@ -235,18 +235,37 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     }
 
     /**
-     * @Given I fix the user id to :arg1
+     * @Given I fix the user id to :key
      */
-    public function iFixTheUserIdTo($arg1)
+    public function iFixTheUserIdTo($key)
     {
-        $this->getKernel()->getContainer()->get('inviqa_launchdarkly.id_provider')->setUserId($arg1);
+        $this->getKernel()->getContainer()->get('inviqa_launchdarkly.id_provider')->setUserId($key);
     }
 
     /**
-     * @Then :arg1 should have been used to identify me
+     * @Then :key should have been used to identify me
      */
-    public function shouldHaveBeenUsedToIdentifyMe($arg1)
+    public function shouldHaveBeenUsedToIdentifyMe($key)
     {
-        assert(LDClientWrapper::$lastUser->getKey() == $arg1);
+        assert(LDClientWrapper::$lastUser->getKey() == $key);
+    }
+
+    /**
+     * @Given I fix the user ip to :ip
+     */
+    public function iFixTheUserIpTo($ip)
+    {
+        IPUserFactory::$ip = $ip;
+        $this->getKernel()->loadConfig(function(ContainerBuilder $container) {
+            $container->loadFromExtension('inviqa_launch_darkly', ['user_factory_service' => 'inviqa_launchdarkly.ip_user_factory']);
+        });
+    }
+
+    /**
+     * @Then :ip should have been used as the ip address
+     */
+    public function shouldHaveBeenUsedAsTheIpAddress($ip)
+    {
+        assert(LDClientWrapper::$lastUser->getIp() == $ip);
     }
 }

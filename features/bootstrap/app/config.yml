@@ -22,3 +22,5 @@ services:
         class: OldTestService
     inviqa_launchdarkly.id_provider:
         class: StaticIdProvider
+    inviqa_launchdarkly.ip_user_factory:
+        class: IPUserFactory

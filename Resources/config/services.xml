@@ -23,7 +23,7 @@
 
         <service id="inviqa_launchdarkly.id_provider" class="StaticIdProvider"/>
 
-        <service id="inviqa_launchdarkly.user_factory" class="Inviqa\LaunchDarklyBundle\User\SimpleUserFactory"/>
+        <service id="inviqa_launchdarkly.simple_user_factory" class="Inviqa\LaunchDarklyBundle\User\SimpleUserFactory"/>
 
         <service id="inviqa_launchdarkly.twig_extension"
                  class="Inviqa\LaunchDarklyBundle\Twig\FlagExtension"

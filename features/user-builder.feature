@@ -6,3 +6,8 @@ Feature: As a developer
     Given I fix the user id to "12345"
     When I visit the homepage
     Then "12345" should have been used to identify me
+
+  Scenario: The user is provided by a custom user factory
+    Given I fix the user ip to "127.1.1.1"
+    When I visit the homepage
+    Then "127.1.1.1" should have been used as the ip address

@@ -139,4 +139,28 @@ class ConfigTest  extends \PHPUnit_Framework_TestCase
             ]], 'defaults'
         );
     }
+
+    public function testUserFactoryServiceAllowed()
+    {
+        $this->assertConfigurationIsValid(
+            [[
+                'api_key' => 'APIKEY',
+                'user_factory_service' => 'my_service_id',
+            ]]
+        );
+    }
+
+    public function testUserFactoryServiceHasDefault()
+    {
+        $this->assertProcessedConfigurationEquals(
+            [[
+                'api_key' => 'APIKEY',
+            ]],
+            [
+                'api_key' => 'APIKEY',
+                'defaults' => [],
+                'user_factory_service' => 'inviqa_launchdarkly.simple_user_factory'
+            ]
+        );
+    }
 }

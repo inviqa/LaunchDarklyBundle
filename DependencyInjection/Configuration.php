@@ -19,6 +19,7 @@ class Configuration implements ConfigurationInterface
                     ->isRequired()
                 ->end()
                 ->scalarNode('base_uri')->end()
+                ->scalarNode('user_factory_service')->defaultValue('inviqa_launchdarkly.simple_user_factory')->end()
                 ->scalarNode('feature_requester_class')->end()
                 ->integerNode('timeout')->end()
                 ->integerNode('connect_timeout')->end()

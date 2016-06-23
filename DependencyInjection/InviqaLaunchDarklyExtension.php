@@ -41,5 +41,6 @@ class InviqaLaunchDarklyExtension extends Extension
                 )
             )
         );
+        $container->setAlias('inviqa_launchdarkly.user_factory', $config['user_factory_service']);
     }
 }
