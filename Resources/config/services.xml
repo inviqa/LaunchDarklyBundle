@@ -21,7 +21,7 @@
             <argument type="service" id="inviqa_launchdarkly.user_factory"/>
         </service>
 
-        <service id="inviqa_launchdarkly.id_provider" class="StaticIdProvider"/>
+        <service id="inviqa_launchdarkly.mock_id_provider" class="MockProvider"/>
 
         <service id="inviqa_launchdarkly.simple_user_factory" class="Inviqa\LaunchDarklyBundle\User\SimpleUserFactory"/>
 
