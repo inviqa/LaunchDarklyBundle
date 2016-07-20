@@ -6,11 +6,11 @@ use Inviqa\LaunchDarklyBundle\Profiler\Context;
 
 interface Client
 {
-    public function isOn($key, Context $context = null, $default = false);
+    public function isOn($key, $default = false, Context $context = null);
     
-    public function getFlag($key, $user, Context $context = null, $default = false);
+    public function getFlag($key, $user, $default = false, Context $context = null);
 
-    public function toggle($key, $user, Context $context = null, $default = false);
+    public function toggle($key, $user, $default = false, Context $context = null);
 
     public function setOffline();
 

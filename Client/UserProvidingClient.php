@@ -18,8 +18,8 @@ class UserProvidingClient extends ClientDecorator implements Client
         parent::__construct($inner);
     }
 
-    public function isOn($key, Context $context = null, $default = false)
+    public function isOn($key, $default = false, Context $context = null)
     {
-        return $this->toggle($key, $this->userFactory->create($this->idProvider->userId()), $context, $default);
+        return $this->toggle($key, $this->userFactory->create($this->idProvider->userId()), $default, $context);
     }
 }

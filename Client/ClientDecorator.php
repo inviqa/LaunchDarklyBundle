@@ -13,19 +13,19 @@ abstract class ClientDecorator implements Client
         $this->inner = $inner;
     }
 
-    public function isOn($key, Context $context = null, $default = false)
+    public function isOn($key, $default = false, Context $context = null)
     {
-        return $this->inner->isOn($key, $context, $default);
+        return $this->inner->isOn($key, $default, $context);
     }
 
-    public function getFlag($key, $user, Context $context = null, $default = false)
+    public function getFlag($key, $user, $default = false, Context $context = null)
     {
-        return $this->inner->getFlag($key, $user, $context, $default);
+        return $this->inner->getFlag($key, $user, $default, $context);
     }
 
-    public function toggle($key, $user, Context $context = null, $default = false)
+    public function toggle($key, $user, $default = false, Context $context = null)
     {
-        return $this->inner->toggle($key, $user, $context, $default);
+        return $this->inner->toggle($key, $user, $default, $context);
     }
 
     public function setOffline()
