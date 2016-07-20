@@ -2,9 +2,9 @@
 
 namespace Inviqa\LaunchDarklyBundle\Client;
 
+use Inviqa\LaunchDarklyBundle\Profiler\Context;
 use Inviqa\LaunchDarklyBundle\User\UserFactory;
 use Inviqa\LaunchDarklyBundle\User\IdProvider;
-use LaunchDarkly\LDUser;
 
 class UserProvidingClient extends ClientDecorator implements Client
 {
@@ -18,8 +18,8 @@ class UserProvidingClient extends ClientDecorator implements Client
         parent::__construct($inner);
     }
 
-    public function isOn($key, $default = false)
+    public function isOn($key, Context $context = null, $default = false)
     {
-        return $this->toggle($key, $this->userFactory->create($this->idProvider->userId()), $default);
+        return $this->toggle($key, $this->userFactory->create($this->idProvider->userId()), $context, $default);
     }
 }

@@ -7,9 +7,9 @@ class TestController extends Controller
 {
     public function indexAction() {
         if ($this->get('inviqa_launchdarkly.client')->isOn('new-homepage-content')) {
-            return new Response("the new homepage content");
+            return new Response("<html><body>the new homepage content</body></html>");
         }
-        return new Response("the old homepage content");
+        return new Response("<html><body>the old homepage content</body></html>");
     }
 
     public function templatedAction() {

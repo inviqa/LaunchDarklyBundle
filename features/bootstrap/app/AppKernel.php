@@ -11,11 +11,12 @@ class AppKernel extends Kernel
 
     public function registerBundles()
     {
-        return array(
+        return [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new TwigBundle(),
+            new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(),
             new InviqaLaunchDarklyBundle,
-        );
+        ];
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)

@@ -3,6 +3,13 @@ framework:
     test: ~
     router:
         resource: "routing.yml"
+    profiler: { only_exceptions: false }
+    templating:
+        engines: ['twig']
+
+web_profiler:
+    toolbar: true
+    intercept_redirects: false
 
 inviqa_launch_darkly:
     api_key: APIKEY
