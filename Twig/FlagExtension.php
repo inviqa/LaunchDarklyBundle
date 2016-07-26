@@ -2,7 +2,7 @@
 
 namespace Inviqa\LaunchDarklyBundle\Twig;
 
-use Inviqa\LaunchDarklyBundle\Client\Client;
+use Inviqa\LaunchDarklyBundle\Client\SimpleClient;
 use Inviqa\LaunchDarklyBundle\Profiler\Context;
 use Twig_Template;
 
@@ -10,7 +10,7 @@ class FlagExtension extends \Twig_Extension
 {
     private $ldClient;
 
-    public function __construct(Client $ldClient)
+    public function __construct(SimpleClient $ldClient)
     {
         $this->ldClient = $ldClient;
     }

@@ -13,11 +13,6 @@ abstract class ClientDecorator implements Client
         $this->inner = $inner;
     }
 
-    public function isOn($key, $default = false, Context $context = null)
-    {
-        return $this->inner->isOn($key, $default, $context);
-    }
-
     public function getFlag($key, $user, $default = false, Context $context = null)
     {
         return $this->inner->getFlag($key, $user, $default, $context);

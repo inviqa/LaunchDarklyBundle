@@ -6,8 +6,6 @@ use Inviqa\LaunchDarklyBundle\Profiler\Context;
 
 interface Client
 {
-    public function isOn($key, $default = false, Context $context = null);
-    
     public function getFlag($key, $user, $default = false, Context $context = null);
 
     public function toggle($key, $user, $default = false, Context $context = null);

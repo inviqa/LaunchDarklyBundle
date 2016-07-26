@@ -15,18 +15,8 @@ class LoggingClient extends ClientDecorator implements Client
         parent::__construct($inner);
     }
 
-    public function isOn($key, $default = false, Context $context = null)
-    {
-        $context = $this->getContext($context);
-        $on = $this->inner->isOn($key, $default, $context);
-        $this->logger->logFlagRequest($key, $on, $context);
-
-        return $on;
-    }
-
     public function toggle($key, $user, $default = false, Context $context = null)
     {
-        $context = $this->getContext($context);
         $on = $this->inner->toggle($key, $user, $default, $context);
         $this->logger->logFlagRequest($key, $on, $context);
 
@@ -35,15 +25,10 @@ class LoggingClient extends ClientDecorator implements Client
 
     public function getFlag($key, $user, $default = false, Context $context = null)
     {
-        $context = $this->getContext($context);
         $on = $this->inner->getFlag($key, $user, $default, $context);
         $this->logger->logFlagRequest($key, $on, $context);
 
         return $on;
     }
 
-    private function getContext(Context $context = null)
-    {
-        return $context ?: Context::fromCode(debug_backtrace(2));
-    }
 }

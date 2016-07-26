@@ -24,9 +24,9 @@ class Context
         return new self('service', "$onService / $offService");
     }
 
-    public static function fromCode($backtrace)
+    public static function fromCode($backtrace, $distance = 0)
     {
-        return new self('code', $backtrace[1]['file'] . ':' . $backtrace[1]['line']);
+        return new self('code', $backtrace[$distance]['file'] . ':' . $backtrace[$distance]['line']);
     }
 
     public function getType()

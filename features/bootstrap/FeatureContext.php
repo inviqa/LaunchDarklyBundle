@@ -6,7 +6,7 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\MinkExtension\Context\MinkAwareContext;
 use Behat\Symfony2Extension\Context\KernelDictionary;
-use Inviqa\LaunchDarklyBundle\Client\Client;
+use Inviqa\LaunchDarklyBundle\Client\SimpleClient;
 use LaunchDarkly\LDClient;
 use LaunchDarkly\LDUser;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -54,7 +54,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
      * You can also pass arbitrary arguments to the
      * context constructor through behat.yml.
      */
-    public function __construct(Client $ldClient)
+    public function __construct(SimpleClient $ldClient)
     {
         $this->ldClient = $ldClient;
     }
@@ -107,7 +107,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
      */
     public function iAskIfAFlagIsOnForAUser()
     {
-        $this->ldClient->getFlag('new-homepage-content', new LDUser('user-id'));
+        $this->ldClient->isOn('new-homepage-content', new LDUser('user-id'));
     }
 
     /**
