@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="inviqa_launchdarkly.feature_requester.class">LaunchDarkly\GuzzleFeatureRequester</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="inviqa_launchdarkly.user_providing_client" class="Inviqa\LaunchDarklyBundle\Client\UserProvidingClient">
+            <argument type="service" id="inviqa_launchdarkly.logging_client"/>
+            <argument type="service" id="inviqa_launchdarkly.id_provider"/>
+            <argument type="service" id="inviqa_launchdarkly.user_factory"/>
+        </service>
+
+        <service id="inviqa_launchdarkly.logging_client" class="Inviqa\LaunchDarklyBundle\Client\LoggingClient">
+            <argument type="service" id="inviqa_launchdarkly.inner_client"/>
+            <argument type="service" id="inviqa_launchdarkly.flag_collector"/>
+        </service>
+
+        <service id="inviqa_launchdarkly.context_adding_client" class="Inviqa\LaunchDarklyBundle\Client\ContextAddingClient">
+            <argument type="service" id="inviqa_launchdarkly.user_providing_client"/>
+        </service>
+
+        <service id="inviqa_launchdarkly.client" alias="inviqa_launchdarkly.context_adding_client"/>
+
+        <service id="inviqa_launchdarkly.no_context_client" alias="inviqa_launchdarkly.user_providing_client"/>
+
+    </services>
+
+</container>

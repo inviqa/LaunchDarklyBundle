@@ -3,6 +3,7 @@
 namespace Inviqa\LaunchDarklyBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -29,7 +30,7 @@ class InviqaLaunchDarklyExtension extends Extension
             new FileLocator($configDirectory)
         );
 
-        $loader->load('services.xml');
+        $this->loadConfig($container, $loader);
         $container->setParameter('inviqa_launchdarkly.feature_requester.api_key', $config['api_key']);
 
         $keys = ['base_uri', 'feature_requester_class', 'timeout', 'connect_timeout', 'capacity', 'events', 'defaults'];
@@ -43,5 +44,15 @@ class InviqaLaunchDarklyExtension extends Extension
         );
         $container->setAlias('inviqa_launchdarkly.user_factory', $config['user_factory_service']);
         $container->setAlias('inviqa_launchdarkly.id_provider', $config['user_id_provider_service']);
+    }
+
+    private function loadConfig(ContainerBuilder $container, LoaderInterface $loader)
+    {
+        $loader->load('services.xml');
+
+        if ($container->getParameter('kernel.debug')) {
+            $loader->load('services_debug.xml');
+        }
+
     }
 }
