@@ -6,6 +6,8 @@ framework:
     profiler: { only_exceptions: false }
     templating:
         engines: ['twig']
+    session:
+        handler_id:  ~
 
 web_profiler:
     toolbar: true
@@ -14,6 +16,7 @@ web_profiler:
 inviqa_launch_darkly:
     api_key: APIKEY
     feature_requester_class: "MockFeatureRequester"
+    user_id_provider_service: "inviqa_launchdarkly.mock_id_provider"
 
 services:
     inviqa_launchdarkly.decorated_client:
@@ -29,5 +32,7 @@ services:
         class: OldTestService
     inviqa_launchdarkly.ip_user_factory:
         class: IPUserFactory
+    inviqa_launchdarkly.mock_id_provider:
+        class: MockProvider
     inviqa_launchdarkly.static_id_provider:
         class: StaticIdProvider

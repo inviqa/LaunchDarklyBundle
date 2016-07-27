@@ -25,7 +25,9 @@
 
         <service id="inviqa_launchdarkly.no_context_client" alias="inviqa_launchdarkly.user_providing_client"/>
 
-        <service id="inviqa_launchdarkly.mock_id_provider" class="MockProvider"/>
+        <service id="inviqa_launchdarkly.session_id_provider" class="Inviqa\LaunchDarklyBundle\User\SessionIdProvider">
+            <argument type="service" id="request_stack"/>
+        </service>
 
         <service id="inviqa_launchdarkly.simple_user_factory" class="Inviqa\LaunchDarklyBundle\User\SimpleUserFactory"/>
 
