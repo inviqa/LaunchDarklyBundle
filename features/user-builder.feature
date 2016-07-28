@@ -1,5 +1,5 @@
 Feature: As a developer
-  I want to be able to configure how the laucnhdarkly user is built
+  I want to be able to configure how the launchdarkly user is built
   So that I can use the correct details
 
   Scenario: The user key is provided by a custom user key provider
