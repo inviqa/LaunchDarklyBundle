@@ -15,7 +15,32 @@ class SessionIdProvider implements IdProvider
 
     public function userId()
     {
-        return $this->requestStack->getCurrentRequest()->getSession()->getId();
+        return $this->session()->getId();
+    }
+
+    private function request()
+    {
+        if (!$request = $this->requestStack->getCurrentRequest()) {
+            throw new \RuntimeException($this->noSessionMessage());
+        }
+
+        return $request;
+    }
+
+    private function session()
+    {
+        if (!$session = $this->request()->getSession()) {
+            throw new \RuntimeException($this->noSessionMessage());
+        }
+
+        return $session;
+    }
+
+    private function noSessionMessage()
+    {
+        return "No request or session was available in order to use the session ID as the user key for LaunchDarkly. 
+        You can set the user_id_provider_service in the inviqa_launch_darkly bundle config to use a custom service to 
+        provide the user key if required";
     }
 
 }

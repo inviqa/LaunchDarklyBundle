@@ -43,16 +43,6 @@
                  >
         </service>
 
-        <service id="inviqa_launchdarkly.flag_collector"
-                 class="Inviqa\LaunchDarklyBundle\Profiler\FlagCollector"
-                 public="false"
-        >
-             <tag name="data_collector"
-                  template="InviqaLaunchDarklyBundle::flag_collector.html.twig"
-                  id="inviqa.flag_collector"
-             />
-        </service>
-
     </services>
 
 </container>

@@ -29,6 +29,17 @@
 
         <service id="inviqa_launchdarkly.no_context_client" alias="inviqa_launchdarkly.user_providing_client"/>
 
+        <service id="inviqa_launchdarkly.flag_collector"
+                 class="Inviqa\LaunchDarklyBundle\Profiler\FlagCollector"
+                 public="false"
+        >
+            <argument>%inviqa_launchdarkly.feature_requester.api_key%</argument>
+             <tag name="data_collector"
+                  template="InviqaLaunchDarklyBundle::flag_collector.html.twig"
+                  id="inviqa.flag_collector"
+             />
+        </service>
+
     </services>
 
 </container>

@@ -11,5 +11,5 @@ class SimpleUserFactory implements UserFactory
     {
         return new LDUser($key);
     }
-    
+
 }

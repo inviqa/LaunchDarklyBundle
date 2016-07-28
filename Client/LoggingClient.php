@@ -18,7 +18,7 @@ class LoggingClient extends ClientDecorator implements Client
     public function toggle($key, $user, $default = false, Context $context = null)
     {
         $on = $this->inner->toggle($key, $user, $default, $context);
-        $this->logger->logFlagRequest($key, $on, $context);
+        $this->logger->logFlagRequest($key, $on, $context, $user);
 
         return $on;
     }
@@ -26,7 +26,7 @@ class LoggingClient extends ClientDecorator implements Client
     public function getFlag($key, $user, $default = false, Context $context = null)
     {
         $on = $this->inner->getFlag($key, $user, $default, $context);
-        $this->logger->logFlagRequest($key, $on, $context);
+        $this->logger->logFlagRequest($key, $on, $context, $user);
 
         return $on;
     }
