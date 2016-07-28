@@ -17,7 +17,7 @@
 
         <service id="inviqa_launchdarkly.user_providing_client" class="Inviqa\LaunchDarklyBundle\Client\UserProvidingClient">
             <argument type="service" id="inviqa_launchdarkly.inner_client"/>
-            <argument type="service" id="inviqa_launchdarkly.id_provider"/>
+            <argument type="service" id="inviqa_launchdarkly.key_provider"/>
             <argument type="service" id="inviqa_launchdarkly.user_factory"/>
         </service>
 
@@ -25,7 +25,7 @@
 
         <service id="inviqa_launchdarkly.no_context_client" alias="inviqa_launchdarkly.user_providing_client"/>
 
-        <service id="inviqa_launchdarkly.session_id_provider" class="Inviqa\LaunchDarklyBundle\User\SessionIdProvider">
+        <service id="inviqa_launchdarkly.session_key_provider" class="Inviqa\LaunchDarklyBundle\User\SessionKeyProvider">
             <argument type="service" id="request_stack"/>
         </service>
 

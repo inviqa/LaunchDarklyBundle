@@ -4,7 +4,7 @@ namespace Inviqa\LaunchDarklyBundle\User;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class SessionIdProvider implements IdProvider
+class SessionKeyProvider implements KeyProvider
 {
     private $requestStack;
 
@@ -13,7 +13,7 @@ class SessionIdProvider implements IdProvider
         $this->requestStack = $requestStack;
     }
 
-    public function userId()
+    public function userKey()
     {
         return $this->session()->getId();
     }
@@ -39,7 +39,7 @@ class SessionIdProvider implements IdProvider
     private function noSessionMessage()
     {
         return "No request or session was available in order to use the session ID as the user key for LaunchDarkly. 
-        You can set the user_id_provider_service in the inviqa_launch_darkly bundle config to use a custom service to 
+        You can set the user_key_provider_service in the inviqa_launch_darkly bundle config to use a custom service to 
         provide the user key if required";
     }
 

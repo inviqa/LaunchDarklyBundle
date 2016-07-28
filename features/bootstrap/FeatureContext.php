@@ -235,13 +235,13 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     }
 
     /**
-     * @Given I fix the user id to :key
+     * @Given I fix the user key to :key
      */
-    public function iFixTheUserIdTo($key)
+    public function iFixTheUserKeyTo($key)
     {
-        StaticIdProvider::setUserId($key);
+        StaticKeyProvider::setUserKey($key);
         $this->getKernel()->loadConfig(function(ContainerBuilder $container) {
-            $container->loadFromExtension('inviqa_launch_darkly', ['user_id_provider_service' => 'inviqa_launchdarkly.static_id_provider']);
+            $container->loadFromExtension('inviqa_launch_darkly', ['user_key_provider_service' => 'inviqa_launchdarkly.static_key_provider']);
         });
 
     }

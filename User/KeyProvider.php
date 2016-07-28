@@ -2,7 +2,7 @@
 
 namespace Inviqa\LaunchDarklyBundle\User;
 
-interface IdProvider
+interface KeyProvider
 {
-    public function userId();
+    public function userKey();
 }

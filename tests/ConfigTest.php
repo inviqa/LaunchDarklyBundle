@@ -160,7 +160,7 @@ class ConfigTest  extends \PHPUnit_Framework_TestCase
                 'api_key' => 'APIKEY',
                 'defaults' => [],
                 'user_factory_service' => 'inviqa_launchdarkly.simple_user_factory',
-                'user_id_provider_service' => 'inviqa_launchdarkly.session_id_provider',
+                'user_key_provider_service' => 'inviqa_launchdarkly.session_key_provider',
             ]
         );
     }
@@ -170,7 +170,7 @@ class ConfigTest  extends \PHPUnit_Framework_TestCase
         $this->assertConfigurationIsValid(
             [[
                 'api_key' => 'APIKEY',
-                'user_id_provider_service' => 'my_service_id',
+                'user_key_provider_service' => 'my_service_id',
             ]]
         );
     }
@@ -185,7 +185,7 @@ class ConfigTest  extends \PHPUnit_Framework_TestCase
                 'api_key' => 'APIKEY',
                 'defaults' => [],
                 'user_factory_service' => 'inviqa_launchdarkly.simple_user_factory',
-                'user_id_provider_service' => 'inviqa_launchdarkly.session_id_provider',
+                'user_key_provider_service' => 'inviqa_launchdarkly.session_key_provider',
             ]
         );
     }

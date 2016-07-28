@@ -1,11 +1,11 @@
 <?php
 
-use Inviqa\LaunchDarklyBundle\User\IdProvider;
+use Inviqa\LaunchDarklyBundle\User\KeyProvider;
 
-class MockProvider implements IdProvider
+class MockProvider implements KeyProvider
 {
-    public function userId()
+    public function userKey()
     {
-        return 'fixed-id';
+        return 'fixed-key';
     }
 }

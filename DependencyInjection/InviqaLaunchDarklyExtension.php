@@ -43,7 +43,7 @@ class InviqaLaunchDarklyExtension extends Extension
             )
         );
         $container->setAlias('inviqa_launchdarkly.user_factory', $config['user_factory_service']);
-        $container->setAlias('inviqa_launchdarkly.id_provider', $config['user_id_provider_service']);
+        $container->setAlias('inviqa_launchdarkly.key_provider', $config['user_key_provider_service']);
     }
 
     private function loadConfig(ContainerBuilder $container, LoaderInterface $loader)
