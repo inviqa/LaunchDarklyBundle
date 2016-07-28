@@ -1,5 +1,6 @@
 <?php
 
+use Inviqa\LaunchDarklyBundle\Client\StaticClient;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,5 +19,12 @@ class TestController extends Controller
 
     public function serviceAction() {
         return new Response($this->get('inviqa_launchdarkly.test_service')->getContent());
+    }
+
+    public function staticAction() {
+        if (StaticClient::isOn('new-static-access-content')) {
+            return new Response("<html><body>the new static access content</body></html>");
+        }
+        return new Response("<html><body>the old static access content</body></html>");
     }
 }

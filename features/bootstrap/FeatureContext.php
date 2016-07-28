@@ -272,4 +272,12 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     {
         assert(LDClientWrapper::$lastUser->getIp() == $ip);
     }
+
+    /**
+     * @When I visit the static method page
+     */
+    public function iVisitTheStaticMethodPage()
+    {
+        $this->mink->getSession()->visit('/static');
+    }
 }

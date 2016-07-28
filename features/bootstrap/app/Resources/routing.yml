@@ -25,3 +25,8 @@ service:
     path: /service
     defaults: {_controller: TestController::serviceAction }
     methods: [GET]
+
+static:
+    path: /static
+    defaults: {_controller: TestController::staticAction }
+    methods: [GET]
