@@ -21,6 +21,14 @@ class TestController extends Controller
         return new Response($this->get('inviqa_launchdarkly.test_service')->getContent());
     }
 
+    public function aliasedServiceAction() {
+        return new Response($this->get('inviqa_launchdarkly.aliased_test_service')->getContent());
+    }
+
+    public function taggedServiceAction() {
+        return new Response($this->get('inviqa_launchdarkly.tagged_test_service')->getContent());
+    }
+
     public function staticAction() {
         if (StaticClient::isOn('new-static-access-content')) {
             return new Response("<html><body>the new static access content</body></html>");

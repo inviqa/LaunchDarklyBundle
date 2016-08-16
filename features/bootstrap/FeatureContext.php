@@ -280,4 +280,20 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     {
         $this->mink->getSession()->visit('/static');
     }
+
+    /**
+     * @When I visit the aliased service page
+     */
+    public function iVisitTheAliasedServicePage()
+    {
+        $this->mink->getSession()->visit('/aliased');
+    }
+
+    /**
+     * @When I visit the tagged service page
+     */
+    public function iVisitTheTaggedServicePage()
+    {
+        $this->mink->getSession()->visit('/tagged');
+    }
 }

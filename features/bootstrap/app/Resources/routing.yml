@@ -30,3 +30,13 @@ static:
     path: /static
     defaults: {_controller: TestController::staticAction }
     methods: [GET]
+
+aliased:
+    path: /aliased
+    defaults: {_controller: TestController::aliasedServiceAction }
+    methods: [GET]
+
+tagged:
+    path: /tagged
+    defaults: {_controller: TestController::taggedServiceAction }
+    methods: [GET]

@@ -1,6 +1,6 @@
 <?php
 
-class OldTestService
+class OldTestService implements TestService
 {
     public function getContent()
     {

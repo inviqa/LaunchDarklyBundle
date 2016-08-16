@@ -26,6 +26,15 @@ services:
     inviqa_launchdarkly.test_service:
         class: OuterService
         arguments: ["@=toggle('new-service-content', 'inviqa_launchdarkly.new_test_service', 'inviqa_launchdarkly.old_test_service')"]
+    inviqa_launchdarkly.tagged_test_service:
+        class: TestService
+        tags:
+            - name: inviqa_launchdarkly.toggle
+              flag: new-tagged-service-content
+              active-id: inviqa_launchdarkly.new_test_service
+              inactive-id: inviqa_launchdarkly.old_test_service
+    inviqa_launchdarkly.aliased_test_service:
+        alias: "new-aliased-service-content?inviqa_launchdarkly.new_test_service:inviqa_launchdarkly.old_test_service"
     inviqa_launchdarkly.new_test_service:
         class: NewTestService
     inviqa_launchdarkly.old_test_service:

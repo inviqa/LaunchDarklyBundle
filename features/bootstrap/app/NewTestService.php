@@ -1,6 +1,6 @@
 <?php
 
-class NewTestService
+class NewTestService implements TestService
 {
     public function getContent()
     {

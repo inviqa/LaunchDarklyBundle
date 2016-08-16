@@ -10,7 +10,7 @@ class FlagProvider implements ExpressionFunctionProviderInterface
     
     public function getFunctions()
     {
-        return array(
+        return [
             new ExpressionFunction('toggle', function ($flag, $onId, $offId, $default = false) {
                 return sprintf('$this->get(\'inviqa_launchdarkly.no_context_client\')->isOn(%s, %s, \Inviqa\LaunchDarklyBundle\Profiler\Context::fromService(%s, %s)) ? $this->get(%s) : $this->get(%s)', $flag, $default, $onId, $offId, $onId, $offId);
             }, function (array $variables, $flag, $onId, $offId, $default = false) {
@@ -19,8 +19,8 @@ class FlagProvider implements ExpressionFunctionProviderInterface
                     $default,
                     \Inviqa\LaunchDarklyBundle\Profiler\Context::fromService($onId, $offId)
                 ) ? $variables['container']->get($onId) : $variables['container']->get($offId);
-            })
-        );
+            }),
+        ];
     }
 
 }
