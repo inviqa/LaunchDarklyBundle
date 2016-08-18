@@ -2,10 +2,10 @@
 
 ## Introduction
 
-A Symfony bundle to integrate the PHP client for [LaunchDarkly](https://launchdarkly.com) 
+A Symfony bundle to integrate the PHP client for [LaunchDarkly](https://launchdarkly.com), 
 a Feature flag management service. 
 
-Documentation of the PHP Client library can be found at 
+Documentation for the PHP Client library can be found at 
 [http://docs.launchdarkly.com/docs/php-sdk-reference]()
 
 ## Installation
@@ -14,7 +14,7 @@ Documentation of the PHP Client library can be found at
 $ composer require inviqa/launchdarkly-bundle
 ```
 
-The flags need to be fetched some how. The simplest option us using 
+The flags need to be fetched somehow. The simplest option is using 
 Guzzle to make HTTP requests. A more complicated but more performant 
 option is to to use the [ld-daemon](https://github.com/launchdarkly/ld-daemon)  
 to store the flags in Redis and then access them from 
@@ -60,8 +60,8 @@ if ($this->get('inviqa_launchdarkly.client')->isOn('my-flag')) {
 
 ## Flag in code
 
-Checking flags in conditionals is the easy approach to get started with. It may not
-be the best approach for maintainability though and other options are provided below.
+Checking flags in conditionals is the simplest approach to get started with. It may not be the best approach for maintainability though and 
+other options are provided below.
 
 ### Passing default
 
@@ -75,8 +75,8 @@ if ($this->get('inviqa_launchdarkly.client')->isOn('my-flag', true)) {
 
 ### Service
 
-You can inject the service into other classes as wel retrieving it from the container is
-a controller using the usual Symfony service configuration:
+You can inject the service into other classes as well as retrieving it 
+from the container in a controller using the usual Symfony service configuration:
 
 ```xml
 <service id="my-service" class="MyClass">
@@ -86,10 +86,10 @@ a controller using the usual Symfony service configuration:
 
 ### Static Access
 
-There is also static access to check a flag, whilst this is generally frowned upon it
-may be preferable to the boilerplate of injecting the service and the associated
-config since this is temporary code that should be removed once the flag
-value is no longer changed:
+There is also static access to check a flag, whilst this is generally 
+frowned upon it may be preferable to the boilerplate of injecting the 
+service and the associated config since this is temporary code that 
+should be removed once the flag value is no longer changed:
 
 ```php
 if (StaticClient::isOn->isOn('my-flag', true)) {
@@ -133,13 +133,15 @@ language function:
         arguments: ["@=toggle('new-service-content', 'inviqa_launchdarkly.new_test_service', 'inviqa_launchdarkly.old_test_service')"]
 ```
 
-Where the first argument (new-service-content) is the flag, the second
-(inviqa_launchdarkly.new_test_service) is the service to inject if it
-is on and the third (inviqa_launchdarkly.old_test_service) is the service
-to use if the flag is off.
+Where the first argument (`new-service-content`) is the flag, the 
+second (`inviqa_launchdarkly.new_test_service`) is the service to 
+inject if it is on and the third 
+(`inviqa_launchdarkly.old_test_service`) is the service to use if the 
+flag is off.
 
-Alternatively you can change which service a service id points at, similar
-to how aliases work but determined by a flag value. This can be done using a tag:
+Alternatively you can change which service a service id points at, 
+similar to how aliases work but determined by a flag value. This can 
+be done using a tag:
 
 ```
 inviqa_launchdarkly.test_service:
