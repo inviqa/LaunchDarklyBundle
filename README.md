@@ -65,7 +65,7 @@ other options are provided below.
 
 ### Passing default
 
-A default value can be passed which will be used UNDER SOME CURCUMSTANCES. This defaults to false.
+A default value can be passed which will be used if an error is encountered, for example, if the feature flag key doesn't exist or the user doesn't have a key specified. This defaults to false.
 
 ```php
 if ($this->get('inviqa_launchdarkly.client')->isOn('my-flag', true)) {
@@ -121,11 +121,9 @@ or passing a default value:
 
 ## Service configuration
 
-Rather than including conditionals in code you may prefer to inject alternative versions
-of services (and then remove the old service altogether once the flag is always on).
+Rather than including conditionals in code you may prefer to inject alternative versions of services (and then remove the old service altogether once the flag is always on).
 
-This can be done at the level of defining arguments for a service using an expression
-language function:
+This can be done at the level of defining arguments for a service using an expression language function:
 
 ```
  inviqa_launchdarkly.test_service:
@@ -153,14 +151,12 @@ inviqa_launchdarkly.test_service:
           inactive-id: inviqa_launchdarkly.old_test_service
 ```
 
-Here the `inviqa_launchdarkly.test_service` service id will be an alias for the
-`inviqa_launchdarkly.new_test_service` if the `new-service-content` flag is on
-and an alias for the `inviqa_launchdarkly.old_test_service` if it is off. This
-allows you to dfeine the change in a single place and have it affect all places
+Here the `inviqa_launchdarkly.test_service` service id will be an alias for the `inviqa_launchdarkly.new_test_service` if the `new-service-content` flag is on and an alias for the
+`inviqa_launchdarkly.old_test_service` if it is off. This allows you 
+to define the change in a single place and have it affect all places
 where the `inviqa_launchdarkly.test_service` service is used.
 
-A shorter but hackier (the way it is processed by the bundle is hackier) alternative
-is to use:
+A shorter but hackier (the way it is processed by the bundle is hackier) alternative is to use:
 
 ```
 inviqa_launchdarkly.test_service:
@@ -168,11 +164,77 @@ inviqa_launchdarkly.test_service:
 ```
 
 ## User id provider service
+
+The user id/key used when requesting a flag's value is provided by a service which needs implement the `\Inviqa\LaunchDarklyBundle\User\KeyProvider` Interface:
+
+```php
+interface KeyProvider
+{
+    public function userKey();
+}
+```
+
+This should return a string value representing the user uniquely, for example their username or if anonymous their session id. The default implementation uses the session id. To use an alternative service create the service definition as normal using whatever id you would like and then set that as the value for the `user_key_provider_service ` key in the bundle config:
+
+```
+inviqa_launch_darkly:
+    api_key: MYAPIKEY
+    user_key_provider_service: my_user_key_provider_sevice
+```
+
 ## User factory service
+
+Only the id/key returned from the user id provider service will be sent to LaunchDarkly by default. You can send further information which allows you to fine tune which user the flag is on for. This can be done by providing an alternative implementation of the user factory service which needs to implement the `\Inviqa\LaunchDarklyBundle\User\UserFactory` interface:
+
+```php
+interface UserFactory
+{
+    public function create($key);
+}
+```
+
+This should return an `\LaunchDarkly\LDUser` object. There is a builder (`\LaunchDarkly\LDUserBuilder`) for the LDUser which can be used to simplify this. The service then needs a definition creating as usual and the id provided as the value for the `user_factory_service ` key in the config:
+
+```
+inviqa_launch_darkly:
+    api_key: MYAPIKEY
+    user_factory_service: my_user_factory_sevice
+```
+
+For example, if we wanted to send the ip address of the user as well we could create an implementation like this:
+
+EXAMPLE
+
 ## Debug toolbar
+
+The flags requested, and whether they were requested in a template, as a service or in code is captured and shown in the debug toolbar.
+
 ## Full Configuration
+
+The full configuration is below. The `base_uri`, `timeout`, `connect_timeout`, `events` and `defaults` keys are all settings for the LaunchDarkly client itself. See [http://docs.launchdarkly.com/docs/php-sdk-reference]() for details. 
+
+```
+# Default configuration for extension with alias: "inviqa_launch_darkly"
+inviqa_launch_darkly:  # Required
+    api_key:              ~ # Required
+    base_uri:             ~
+    user_factory_service:  inviqa_launchdarkly.simple_user_factory
+    user_key_provider_service:  inviqa_launchdarkly.session_key_provider
+    feature_requester_class:  ~
+    timeout:              ~
+    connect_timeout:      ~
+    capacity:             ~
+    events:               ~
+    defaults:
+
+        # Prototype
+        flag:                 ~
+```
+        
 ## Full client
-## Testing
+
+You can also use the full client service to access other methods on the LDClient (see [http://docs.launchdarkly.com/docs/php-sdk-reference]()). This has a service id of `inviqa_launchdarkly.inner_client`.
+
 ## Todo
 
 * A user id provider service that integrates with the security user
