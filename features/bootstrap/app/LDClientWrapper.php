@@ -19,13 +19,9 @@ class LDClientWrapper extends ClientDecorator implements Client
         return $this->inner->getFlag($key, $user, $default);
     }
 
-    public function toggle($key, $user, $default = false, Context $context = null) {
+    public function variation($key, $user, $default = false, Context $context = null) {
         self::$lastUser = $user;
-        return $this->inner->toggle($key, $user, $default);
+        return $this->inner->variation($key, $user, $default);
     }
 
-    public function isOn($key, $default = false, Context $context = null)
-    {
-        throw new RuntimeException('The LDClient wrapped by this class does not have this method');
-    }
 }

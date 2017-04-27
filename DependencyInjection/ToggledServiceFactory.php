@@ -19,7 +19,7 @@ class ToggledServiceFactory
     
     public function get($flag, $onId, $offId, $default = false)
     {
-        if ($this->client->isOn($flag, $default, Context::fromService($onId, $offId))) {
+        if ($this->client->variation($flag, $default, Context::fromService($onId, $offId))) {
             return $this->container->get($onId);
         }
         

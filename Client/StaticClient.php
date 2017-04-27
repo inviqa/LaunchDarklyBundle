@@ -14,9 +14,9 @@ class StaticClient
         self::$clientProvider = $clientProvider;
     }
 
-    public static function isOn($key, $default = false, Context $context = null)
+    public static function variation($key, $default = false, Context $context = null)
     {
-        return self::getClient()->isOn($key, $default, $context);
+        return self::getClient()->variation($key, $default, $context);
     }
 
     private static function getClient()

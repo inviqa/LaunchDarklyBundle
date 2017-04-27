@@ -6,6 +6,6 @@ use Inviqa\LaunchDarklyBundle\Profiler\Context;
 
 interface SimpleClient
 {
-    public function isOn($key, $default = false, Context $context = null);
+    public function variation($key, $default = false, Context $context = null);
     
 }

@@ -53,7 +53,7 @@ environments so making it a parameter will be the way to go.
 A flag can then be checked using a flag service:
 
 ```php
-if ($this->get('inviqa_launchdarkly.client')->isOn('my-flag')) {
+if ($this->get('inviqa_launchdarkly.client')->variation('my-flag')) {
     //new feature
 }
 ```
@@ -68,7 +68,7 @@ other options are provided below.
 A default value can be passed which will be used if an error is encountered, for example, if the feature flag key doesn't exist or the user doesn't have a key specified. This defaults to false.
 
 ```php
-if ($this->get('inviqa_launchdarkly.client')->isOn('my-flag', true)) {
+if ($this->get('inviqa_launchdarkly.client')->variation('my-flag', true)) {
     //new feature
 }
 ```
@@ -92,7 +92,7 @@ service and the associated config since this is temporary code that
 should be removed once the flag value is no longer changed:
 
 ```php
-if (StaticClient::isOn->isOn('my-flag', true)) {
+if (StaticClient::variation('my-flag', true)) {
     //new feature
 }
 ```

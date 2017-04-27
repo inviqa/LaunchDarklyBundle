@@ -1,5 +1,6 @@
 <?php
 
+use LaunchDarkly\FeatureFlag;
 use LaunchDarkly\FeatureRequester;
 
 class MockFeatureRequester implements FeatureRequester
@@ -43,14 +44,31 @@ class MockFeatureRequester implements FeatureRequester
     public function get($key)
     {
         self::$usedForKey = true;
-        return [
+        return FeatureFlag::decode([
             "name" => $key,
             "key" => $key,
+            "version" => 1,
+            "prerequisites" => [],
+            "targets" => [],
+            "rules" => [],
+            "fallthrough" => ["variation" => 0],
+            "offVariation" => null,
             "on" => self::$flags[$key],
             "salt" => "faslkhfak",
+            "deleted" => false,
             "variations" => [
                 ["value" => self::$flags[$key], "weight" => 100]
             ]
-        ];
+        ]);
+    }
+
+    /**
+     * Gets all features.
+     *
+     * @return array()|null The decoded FeatureFlags, or null if missing
+     */
+    public function getAll()
+    {
+        // TODO: Implement getAll() method.
     }
 }

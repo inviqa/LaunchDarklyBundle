@@ -13,9 +13,9 @@ class ContextAddingClient implements SimpleClient
         $this->inner = $inner;
     }    
 
-    public function isOn($key, $default = false, Context $context = null)
+    public function variation($key, $default = false, Context $context = null)
     {
-        return $this->inner->isOn($key, $default, Context::fromCode(debug_backtrace(2)));
+        return $this->inner->variation($key, $default, Context::fromCode(debug_backtrace(2)));
     }
 
 }

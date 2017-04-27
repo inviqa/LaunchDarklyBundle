@@ -18,9 +18,9 @@ abstract class ClientDecorator implements Client
         return $this->inner->getFlag($key, $user, $default, $context);
     }
 
-    public function toggle($key, $user, $default = false, Context $context = null)
+    public function variation($key, $user, $default = false, Context $context = null)
     {
-        return $this->inner->toggle($key, $user, $default, $context);
+        return $this->inner->variation($key, $user, $default, $context);
     }
 
     public function setOffline()

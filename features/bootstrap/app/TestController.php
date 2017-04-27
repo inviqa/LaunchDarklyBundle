@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TestController extends Controller
 {
     public function indexAction() {
-        if ($this->get('inviqa_launchdarkly.client')->isOn('new-homepage-content')) {
+        if ($this->get('inviqa_launchdarkly.client')->variation('new-homepage-content')) {
             return new Response("<html><body>the new homepage content</body></html>");
         }
         return new Response("<html><body>the old homepage content</body></html>");
@@ -30,7 +30,7 @@ class TestController extends Controller
     }
 
     public function staticAction() {
-        if (StaticClient::isOn('new-static-access-content')) {
+        if (StaticClient::variation('new-static-access-content')) {
             return new Response("<html><body>the new static access content</body></html>");
         }
         return new Response("<html><body>the old static access content</body></html>");

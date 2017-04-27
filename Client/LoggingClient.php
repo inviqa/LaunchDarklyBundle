@@ -15,9 +15,9 @@ class LoggingClient extends ClientDecorator implements Client
         parent::__construct($inner);
     }
 
-    public function toggle($key, $user, $default = false, Context $context = null)
+    public function variation($key, $user, $default = false, Context $context = null)
     {
-        $on = $this->inner->toggle($key, $user, $default, $context);
+        $on = $this->inner->variation($key, $user, $default, $context);
         $this->logger->logFlagRequest($key, $on, $context, $user);
 
         return $on;

@@ -19,8 +19,8 @@ class UserProvidingClient implements SimpleClient
         $this->userFactory = $userFactory;
     }
 
-    public function isOn($key, $default = false, Context $context = null)
+    public function variation($key, $default = false, Context $context = null)
     {
-        return $this->inner->toggle($key, $this->userFactory->create($this->keyProvider->userKey()), $default, $context);
+        return $this->inner->variation($key, $this->userFactory->create($this->keyProvider->userKey()), $default, $context);
     }
 }

@@ -8,7 +8,7 @@ interface Client
 {
     public function getFlag($key, $user, $default = false, Context $context = null);
 
-    public function toggle($key, $user, $default = false, Context $context = null);
+    public function variation($key, $user, $default = false, Context $context = null);
 
     public function setOffline();
 

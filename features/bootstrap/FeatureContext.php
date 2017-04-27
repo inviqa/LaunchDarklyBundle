@@ -107,7 +107,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
      */
     public function iAskIfAFlagIsOnForAUser()
     {
-        $this->ldClient->isOn('new-homepage-content', new LDUser('user-id'));
+        $this->ldClient->variation('new-homepage-content', new LDUser('user-id'));
     }
 
     /**
