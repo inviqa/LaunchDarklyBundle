@@ -2,14 +2,14 @@
 
 use Inviqa\LaunchDarklyBundle\Client\Client;
 use Inviqa\LaunchDarklyBundle\Client\ClientDecorator;
+use Inviqa\LaunchDarklyBundle\Client\LDCLientAdaptor;
 use Inviqa\LaunchDarklyBundle\Profiler\Context;
-use LaunchDarkly\LDClient;
 
 class LDClientWrapper extends ClientDecorator implements Client
 {
     static public $lastUser;
 
-    public function __construct(LDClient $inner)
+    public function __construct(LDCLientAdaptor $inner)
     {
         $this->inner = $inner;
     }

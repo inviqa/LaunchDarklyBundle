@@ -17,7 +17,7 @@
         </service>
 
         <service id="inviqa_launchdarkly.logging_client" class="Inviqa\LaunchDarklyBundle\Client\LoggingClient">
-            <argument type="service" id="inviqa_launchdarkly.inner_client"/>
+            <argument type="service" id="inviqa_launchdarkly.inner_client_adaptor"/>
             <argument type="service" id="inviqa_launchdarkly.flag_collector"/>
         </service>
 

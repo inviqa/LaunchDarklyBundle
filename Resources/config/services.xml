@@ -15,8 +15,12 @@
             <argument>%inviqa_launchdarkly.feature_requester.options%</argument>
         </service>
 
-        <service id="inviqa_launchdarkly.user_providing_client" class="Inviqa\LaunchDarklyBundle\Client\UserProvidingClient">
+        <service id="inviqa_launchdarkly.inner_client_adaptor" class="Inviqa\LaunchDarklyBundle\Client\LDCLientAdaptor">
             <argument type="service" id="inviqa_launchdarkly.inner_client"/>
+        </service>
+
+        <service id="inviqa_launchdarkly.user_providing_client" class="Inviqa\LaunchDarklyBundle\Client\UserProvidingClient">
+            <argument type="service" id="inviqa_launchdarkly.inner_client_adaptor"/>
             <argument type="service" id="inviqa_launchdarkly.key_provider"/>
             <argument type="service" id="inviqa_launchdarkly.user_factory"/>
         </service>

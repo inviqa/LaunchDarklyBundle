@@ -21,7 +21,7 @@ inviqa_launch_darkly:
 services:
     inviqa_launchdarkly.decorated_client:
         class: LDClientWrapper
-        decorates: inviqa_launchdarkly.inner_client
+        decorates: inviqa_launchdarkly.inner_client_adaptor
         arguments: ["@inviqa_launchdarkly.decorated_client.inner"]
     inviqa_launchdarkly.test_service:
         class: OuterService
