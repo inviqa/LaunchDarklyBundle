@@ -15,7 +15,7 @@
             <argument>%inviqa_launchdarkly.feature_requester.options%</argument>
         </service>
 
-        <service id="inviqa_launchdarkly.inner_client_adaptor" class="Inviqa\LaunchDarklyBundle\Client\LDCLientAdaptor">
+        <service id="inviqa_launchdarkly.inner_client_adaptor" class="Inviqa\LaunchDarklyBundle\Client\LDClientAdaptor">
             <argument type="service" id="inviqa_launchdarkly.inner_client"/>
         </service>
 
