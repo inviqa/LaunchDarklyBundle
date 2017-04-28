@@ -38,6 +38,21 @@ also needs to be done.
 
 ## Simplest config and example
 
+The bundle needs to be registered in AppKernel:
+
+```
+// app/AppKernel.php
+
+public function registerBundles()
+{
+    $bundles = [
+        //...
+        new new Inviqa\LaunchDarklyBundle\InviqaLaunchDarklyBundle(),
+    ];
+}
+
+```
+
 The minimum config needed is to provide your API Key:
 
 ```
