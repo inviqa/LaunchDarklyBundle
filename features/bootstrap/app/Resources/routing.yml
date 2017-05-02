@@ -40,3 +40,13 @@ tagged:
     path: /tagged
     defaults: {_controller: TestController::taggedServiceAction }
     methods: [GET]
+
+home_user:
+    path: /homepage-user
+    defaults: {_controller: TestController::indexUserAction }
+    methods: [GET]
+
+static_user:
+    path: /static-user
+    defaults: {_controller: TestController::staticUserAction }
+    methods: [GET]

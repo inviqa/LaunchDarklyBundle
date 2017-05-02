@@ -296,4 +296,20 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
     {
         $this->mink->getSession()->visit('/tagged');
     }
+
+    /**
+     * @When I visit the explicit user homepage
+     */
+    public function iVisitTheExplicitUserHomepage()
+    {
+        $this->mink->getSession()->visit('/homepage-user');
+    }
+
+    /**
+     * @When I visit the explicit user static method page
+     */
+    public function iVisitTheExplicitUserStaticMethodPage()
+    {
+        $this->mink->getSession()->visit('/static-user');
+    }
 }

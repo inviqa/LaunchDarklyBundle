@@ -3,6 +3,7 @@
 namespace Inviqa\LaunchDarklyBundle;
 
 use Inviqa\LaunchDarklyBundle\Client\StaticClient;
+use Inviqa\LaunchDarklyBundle\Client\ExplicitUser\StaticClient as UserStaticClient;
 use Inviqa\LaunchDarklyBundle\DependencyInjection\AliasedServicePass;
 use Inviqa\LaunchDarklyBundle\DependencyInjection\ToggledServicePass;
 use Inviqa\LaunchDarklyBundle\ExpressionLanguage\FlagProvider;
@@ -26,6 +27,12 @@ class InviqaLaunchDarklyBundle extends Bundle
         StaticClient::setClient(
             function () {
                 return $this->container->get('inviqa_launchdarkly.client');
+            }
+        );
+
+        UserStaticClient::setClient(
+            function () {
+                return $this->container->get('inviqa_launchdarkly.user_client');
             }
         );
     }
