@@ -1,5 +1,9 @@
 # LaunchDarkly Bundle
 
+## Note
+
+This is not a stable release, there may well be things that need fixing and B/C breaks to come.
+
 ## Introduction
 
 A Symfony bundle to integrate the PHP client for [LaunchDarkly](https://launchdarkly.com), 
@@ -107,7 +111,7 @@ service and the associated config since this is temporary code that
 should be removed once the flag value is no longer changed:
 
 ```php
-if (StaticClient::variation('my-flag', true)) {
+if (Inviqa\LaunchDarklyBundle\Client\StaticClient::variation('my-flag', true)) {
     //new feature
 }
 ```
@@ -219,6 +223,34 @@ inviqa_launch_darkly:
 For example, if we wanted to send the ip address of the user as well we could create an implementation like this:
 
 EXAMPLE
+
+### Passing the user key explicitly
+
+If the user is not available implicitly from the session (or some other means) then 
+you can pass it directly using the 
+
+```
+inviqa_launchdarkly.user_client
+```
+
+service. For example:
+
+```php
+if ($this->get('inviqa_launchdarkly.user_client')->variation('my-flag', new LDClient('the-user-id'))) {
+    //new feature
+}
+```
+
+or with an alternative static client:
+
+```php
+if (Inviqa\LaunchDarklyBundle\Client\ExplicitUser\StaticClient::variation('my-flag', new LDClient('the-user-id'))) {
+    //new feature
+}
+```
+
+When using these versions of the client the User id provider service and User factory service will not be used.
+
 
 ## Debug toolbar
 
