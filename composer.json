@@ -7,7 +7,7 @@
         }
     ],
     "require": {
-        "symfony/symfony": "^2.7 || ^3.4.43",
+        "symfony/symfony": "^2.7 || ^3.0",
         "launchdarkly/launchdarkly-php": "~2.1"
 
     },
