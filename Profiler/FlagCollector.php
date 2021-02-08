@@ -65,6 +65,11 @@ class FlagCollector extends DataCollector
      */
     private function getArrayOfUserDetails(LDUser $user)
     {
-        return $user->toJSON();
+        return [];
+    }
+
+    public function reset()
+    {
+        $this->data['flags'] = [];
     }
 }
