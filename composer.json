@@ -8,8 +8,8 @@
     ],
     "require": {
         "launchdarkly/launchdarkly-php": "^3.7",
-        "symfony/expression-language": "^5.2",
-        "symfony/dependency-injection": "^5.2"
+        "symfony/dependency-injection": "^4.2 | ^5.2",
+        "symfony/expression-language": "^4.2 | ^5.2"
 
     },
     "autoload": {

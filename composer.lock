@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa4ed6c846690e4a50ad6f513999c73f",
+    "content-hash": "2aaf65a4f9564fecbf5be2d8185eed91",
     "packages": [
         {
             "name": "launchdarkly/launchdarkly-php",
