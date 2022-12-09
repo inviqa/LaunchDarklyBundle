@@ -18,7 +18,7 @@ class FlagCollector extends DataCollector
         $this->data['apiKey'] = $apiKey;
     }
 
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    public function collect(Request $request, Response $response, \Throwable $exception = null)
     {
     }
 
