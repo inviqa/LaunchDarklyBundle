@@ -4,9 +4,11 @@ namespace Inviqa\LaunchDarklyBundle\Twig;
 
 use Inviqa\LaunchDarklyBundle\Client\SimpleClient;
 use Inviqa\LaunchDarklyBundle\Profiler\Context;
-use Twig_Template;
+use Twig\Extension\AbstractExtension;
+use Twig\Template;
+use Twig\TwigFunction;
 
-class FlagExtension extends \Twig_Extension
+class FlagExtension extends AbstractExtension
 {
     private $ldClient;
 
@@ -18,8 +20,8 @@ class FlagExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction(
-                'isFlagOn', function ($key, \Twig_Template $template = null, $default = false) {
+            new TwigFunction(
+                'isFlagOn', function ($key, Template $template = null, $default = false) {
                 return $this->ldClient->variation($key, $default, Context::fromTemplate(
                     $template
                         ? $template->getTemplateName()
