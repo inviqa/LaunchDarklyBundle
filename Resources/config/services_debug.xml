@@ -45,8 +45,8 @@
         >
             <argument>%inviqa_launchdarkly.feature_requester.api_key%</argument>
              <tag name="data_collector"
-                  template="InviqaLaunchDarklyBundle::flag_collector.html.twig"
-                  id="inviqa.flag_collector"
+                  template="@InviqaLaunchDarklyBundle/Collector/flag_collector.html.twig"
+                  id="inviqa_launchdarkly.flag_collector"
              />
         </service>
 
