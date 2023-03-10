@@ -1,5 +1,7 @@
 <?php
 
+namespace Inviqa\LaunchDarklyBundle\Tests;
+
 class OuterService
 {
     private $inner;

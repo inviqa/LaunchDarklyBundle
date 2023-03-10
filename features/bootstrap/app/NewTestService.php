@@ -1,5 +1,7 @@
 <?php
 
+namespace Inviqa\LaunchDarklyBundle\Tests;
+
 class NewTestService implements TestService
 {
     public function getContent()

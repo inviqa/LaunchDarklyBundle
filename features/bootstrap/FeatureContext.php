@@ -1,31 +1,30 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
-use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\MinkExtension\Context\MinkAwareContext;
-use Behat\Symfony2Extension\Context\KernelDictionary;
 use Inviqa\LaunchDarklyBundle\Client\SimpleClient;
-use LaunchDarkly\LDClient;
+use Inviqa\LaunchDarklyBundle\Tests\IPUserFactory;
+use Inviqa\LaunchDarklyBundle\Tests\LDClientWrapper;
+use Inviqa\LaunchDarklyBundle\Tests\MockFeatureRequester;
+use Inviqa\LaunchDarklyBundle\Tests\StaticKeyProvider;
 use LaunchDarkly\LDUser;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareContext
+class FeatureContext implements Context, MinkAwareContext, ContainerAwareInterface
 {
-    use KernelDictionary;
+    use ContainerAwareTrait;
     /**
      * @var \Behat\Mink\Mink
      */
     private $mink;
     private $minkParameters;
-    /**
-     * @var LDClient
-     */
-    private $ldClient;
 
     /**
      * Sets Mink instance.
@@ -47,16 +46,14 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
         $this->minkParameters = $parameters;
     }
 
-    /**
-     * Initializes context.
-     *
-     * Every scenario gets its own context instance.
-     * You can also pass arbitrary arguments to the
-     * context constructor through behat.yml.
-     */
-    public function __construct(SimpleClient $ldClient)
+    public function getLdClient(): SimpleClient
     {
-        $this->ldClient = $ldClient;
+        return $this->container->get('inviqa_launchdarkly.client');
+    }
+
+    public function getKernel(): KernelInterface
+    {
+        return $this->container->get('behat.service_container')->get('fob_symfony.driver_kernel');
     }
 
     /** @BeforeScenario */
@@ -79,8 +76,9 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
      */
     public function iShouldSee($content)
     {
-        if(strpos($this->mink->getSession()->getPage()->getContent(), $content) === false) {
-            throw new RuntimeException("Expected content not found ($content)");
+        $page = $this->mink->getSession()->getPage()->getContent();
+        if(strpos($page, $content) === false) {
+            throw new RuntimeException("Expected content not found ($content) in page content: $page");
         }
     }
 
@@ -107,7 +105,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
      */
     public function iAskIfAFlagIsOnForAUser()
     {
-        $this->ldClient->variation('new-homepage-content', new LDUser('user-id'));
+        $this->getLdClient()->variation('new-homepage-content', new LDUser('user-id'));
     }
 
     /**
@@ -198,6 +196,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
         $this->getKernel()->loadConfig(function(ContainerBuilder $container) use ($arg1, $arg2){
             $container->loadFromExtension('inviqa_launch_darkly', [$arg1 => $arg2]);
         });
+        $this->container = $this->getKernel()->getContainer();
     }
 
     /**
@@ -219,6 +218,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
         $this->getKernel()->loadConfig(function(ContainerBuilder $container) use ($key, $castValue){
             $container->loadFromExtension('inviqa_launch_darkly', [$key => $castValue]);
         });
+        $this->container = $this->getKernel()->getContainer();
     }
 
     /**
@@ -232,6 +232,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
                 'flag_two' =>  false,
             ]]);
         });
+        $this->container = $this->getKernel()->getContainer();
     }
 
     /**
@@ -243,7 +244,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
         $this->getKernel()->loadConfig(function(ContainerBuilder $container) {
             $container->loadFromExtension('inviqa_launch_darkly', ['user_key_provider_service' => 'inviqa_launchdarkly.static_key_provider']);
         });
-
+        $this->container = $this->getKernel()->getContainer();
     }
 
     /**
@@ -263,6 +264,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, MinkAwareConte
         $this->getKernel()->loadConfig(function(ContainerBuilder $container) {
             $container->loadFromExtension('inviqa_launch_darkly', ['user_factory_service' => 'inviqa_launchdarkly.ip_user_factory']);
         });
+        $this->container = $this->getKernel()->getContainer();
     }
 
     /**

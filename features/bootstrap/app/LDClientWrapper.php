@@ -1,5 +1,7 @@
 <?php
 
+namespace Inviqa\LaunchDarklyBundle\Tests;
+
 use Inviqa\LaunchDarklyBundle\Client\Client;
 use Inviqa\LaunchDarklyBundle\Client\ClientDecorator;
 use Inviqa\LaunchDarklyBundle\Client\LDClientAdaptor;

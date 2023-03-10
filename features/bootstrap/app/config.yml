@@ -2,10 +2,8 @@ framework:
     secret: "Secrets, silent, stony sit in the dark palaces of both our hearts: secrets weary of their tyranny: tyrants willing to be dethroned."
     test: ~
     router:
-        resource: "routing.yml"
+        resource: "%kernel.project_dir%/features/bootstrap/app/Resources/config/routing.yml"
     profiler: { only_exceptions: false }
-    templating:
-        engines: ['twig']
     session:
         handler_id:  ~
 
@@ -15,19 +13,22 @@ web_profiler:
 
 inviqa_launch_darkly:
     api_key: APIKEY
-    feature_requester_class: "MockFeatureRequester"
+    feature_requester_class: \Inviqa\LaunchDarklyBundle\Tests\MockFeatureRequester
     user_key_provider_service: "inviqa_launchdarkly.mock_key_provider"
+
+twig:
+    paths: ['%kernel.project_dir%/features/bootstrap/app/Resources/views']
 
 services:
     inviqa_launchdarkly.decorated_client:
-        class: LDClientWrapper
+        class: \Inviqa\LaunchDarklyBundle\Tests\LDClientWrapper
         decorates: inviqa_launchdarkly.inner_client_adaptor
         arguments: ["@inviqa_launchdarkly.decorated_client.inner"]
     inviqa_launchdarkly.test_service:
-        class: OuterService
+        class: \Inviqa\LaunchDarklyBundle\Tests\OuterService
         arguments: ["@=toggle('new-service-content', 'inviqa_launchdarkly.new_test_service', 'inviqa_launchdarkly.old_test_service')"]
     inviqa_launchdarkly.tagged_test_service:
-        class: TestService
+        class: \Inviqa\LaunchDarklyBundle\Tests\TestService
         tags:
             - name: inviqa_launchdarkly.toggle
               flag: new-tagged-service-content
@@ -36,12 +37,35 @@ services:
     inviqa_launchdarkly.aliased_test_service:
         alias: "new-aliased-service-content?inviqa_launchdarkly.new_test_service:inviqa_launchdarkly.old_test_service"
     inviqa_launchdarkly.new_test_service:
-        class: NewTestService
+        class: \Inviqa\LaunchDarklyBundle\Tests\NewTestService
+        public: true
     inviqa_launchdarkly.old_test_service:
-        class: OldTestService
+        class: \Inviqa\LaunchDarklyBundle\Tests\OldTestService
+        public: true
     inviqa_launchdarkly.ip_user_factory:
-        class: IPUserFactory
+        class: \Inviqa\LaunchDarklyBundle\Tests\IPUserFactory
+        public: true
     inviqa_launchdarkly.mock_key_provider:
-        class: MockProvider
+        class: \Inviqa\LaunchDarklyBundle\Tests\MockProvider
+        public: true
     inviqa_launchdarkly.static_key_provider:
-        class: StaticKeyProvider
+        class: \Inviqa\LaunchDarklyBundle\Tests\StaticKeyProvider
+        public: true
+
+    Inviqa\LaunchDarklyBundle\Tests\TestController:
+        class: \Inviqa\LaunchDarklyBundle\Tests\TestController
+        arguments:
+            - "@inviqa_launchdarkly.client"
+            - "@inviqa_launchdarkly.user_client"
+            - "@inviqa_launchdarkly.test_service"
+            - "@inviqa_launchdarkly.aliased_test_service"
+            - "@inviqa_launchdarkly.tagged_test_service"
+        tags: ['controller.service_arguments', 'controller.service_subscriber']
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+
+    FeatureContext:
+        class: FeatureContext
+        public: true
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]

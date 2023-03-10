@@ -2,11 +2,16 @@ default:
     suites:
         default:
             contexts:
-                - FeatureContext:
-                    ldClient:   '@inviqa_launchdarkly.client'
+                - FeatureContext
     extensions:
-        Behat\Symfony2Extension: ~
+        FriendsOfBehat\SymfonyExtension:
+            bootstrap: ~
+            kernel:
+                class: '\Inviqa\LaunchDarklyBundle\Tests\AppKernel'
+                path: 'features/bootstrap/app/AppKernel.php'
+                environment: ~
+                debug: ~
         Behat\MinkExtension:
             sessions:
                 default:
-                    symfony2: ~
+                    symfony: ~

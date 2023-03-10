@@ -1,5 +1,7 @@
 <?php
 
+namespace Inviqa\LaunchDarklyBundle\Tests;
+
 use Inviqa\LaunchDarklyBundle\User\UserFactory;
 use LaunchDarkly\LDUserBuilder;
 

@@ -1,7 +1,8 @@
 <?php
 
+use Inviqa\LaunchDarklyBundle\Tests\AppKernel;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Debug\Debug;
+use Symfony\Component\ErrorHandler\Debug;
 
 // If you don't want to setup permissions the proper way, just uncomment the following PHP line
 // read http://symfony.com/doc/current/book/installation.html#checking-symfony-application-configuration-and-setup
@@ -22,10 +23,9 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
  * @var Composer\Autoload\ClassLoader $loader
  */
 $loader = require __DIR__.'/../../../vendor/autoload.php';
-Debug::enable(E_ALL & E_STRICT & ~E_DEPRECATED);
+Debug::enable();
 
 $kernel = new AppKernel('dev', true);
-$kernel->loadClassCache();
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();

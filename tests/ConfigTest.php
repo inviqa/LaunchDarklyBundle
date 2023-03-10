@@ -3,7 +3,7 @@
 use Inviqa\LaunchDarklyBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 
-class ConfigTest  extends \PHPUnit_Framework_TestCase
+class ConfigTest  extends \PHPUnit\Framework\TestCase
 {
     use ConfigurationTestCaseTrait;
 

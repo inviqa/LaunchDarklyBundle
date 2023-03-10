@@ -25,19 +25,19 @@
             <argument type="service" id="inviqa_launchdarkly.logging_client"/>
         </service>
 
-        <service id="inviqa_launchdarkly.context_adding_client" class="Inviqa\LaunchDarklyBundle\Client\ContextAddingClient">
+        <service id="inviqa_launchdarkly.context_adding_client" class="Inviqa\LaunchDarklyBundle\Client\ContextAddingClient" public="true">
             <argument type="service" id="inviqa_launchdarkly.user_providing_client"/>
         </service>
 
-        <service id="inviqa_launchdarkly.context_adding_user_client" class="Inviqa\LaunchDarklyBundle\Client\ExplicitUser\ContextAddingClient">
+        <service id="inviqa_launchdarkly.context_adding_user_client" class="Inviqa\LaunchDarklyBundle\Client\ExplicitUser\ContextAddingClient" public="true">
             <argument type="service" id="inviqa_launchdarkly.inner_client_user_adaptor"/>
         </service>
 
-        <service id="inviqa_launchdarkly.client" alias="inviqa_launchdarkly.context_adding_client"/>
+        <service id="inviqa_launchdarkly.client" alias="inviqa_launchdarkly.context_adding_client" public="true"/>
 
-        <service id="inviqa_launchdarkly.user_client" alias="inviqa_launchdarkly.context_adding_user_client"/>
+        <service id="inviqa_launchdarkly.user_client" alias="inviqa_launchdarkly.context_adding_user_client" public="true"/>
 
-        <service id="inviqa_launchdarkly.no_context_client" alias="inviqa_launchdarkly.user_providing_client"/>
+        <service id="inviqa_launchdarkly.no_context_client" alias="inviqa_launchdarkly.user_providing_client" public="true"/>
 
         <service id="inviqa_launchdarkly.flag_collector"
                  class="Inviqa\LaunchDarklyBundle\Profiler\FlagCollector"

@@ -1,5 +1,7 @@
 <?php
 
+namespace Inviqa\LaunchDarklyBundle\Tests;
+
 use LaunchDarkly\FeatureFlag;
 use LaunchDarkly\FeatureRequester;
 
@@ -8,7 +10,7 @@ class MockFeatureRequester implements FeatureRequester
     public static $capacity;
     public static $events;
     public static $defaults;
-    private static $flags;
+    public static $flags;
     public static $baseUri;
     public static $apiKey;
     public static $connectTimeout;
@@ -33,15 +35,15 @@ class MockFeatureRequester implements FeatureRequester
 
     public static function setOn($name)
     {
-        self::$flags[$name] = true;
+        self::$flags[$name] = self::getFlag($name, true);
     }
 
     public static function setOff($name)
     {
-        self::$flags[$name] = false;
+        self::$flags[$name] = self::getFlag($name, false);
     }
 
-    public function get($key)
+    private static function getFlag($key, $value)
     {
         self::$usedForKey = true;
         return FeatureFlag::decode([
@@ -53,11 +55,11 @@ class MockFeatureRequester implements FeatureRequester
             "rules" => [],
             "fallthrough" => ["variation" => 0],
             "offVariation" => null,
-            "on" => self::$flags[$key],
+            "on" => $value,
             "salt" => "faslkhfak",
             "deleted" => false,
             "variations" => [
-                ["value" => self::$flags[$key], "weight" => 100]
+                ["value" => $value, "weight" => 100]
             ]
         ]);
     }
@@ -70,5 +72,20 @@ class MockFeatureRequester implements FeatureRequester
     public function getAll()
     {
         // TODO: Implement getAll() method.
+    }
+
+    public function getFeature($key)
+    {
+        return isset(self::$flags[$key]) ? self::$flags[$key] : null;
+    }
+
+    public function getSegment($key)
+    {
+        return null;
+    }
+
+    public function getAllFeatures()
+    {
+        return self::$flags;
     }
 }

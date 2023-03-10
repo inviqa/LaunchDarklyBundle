@@ -1,58 +1,68 @@
 <?php
 
+namespace Inviqa\LaunchDarklyBundle\Tests;
+
+use FriendsOfBehat\SymfonyExtension\Bundle\FriendsOfBehatSymfonyExtensionBundle;
 use Inviqa\LaunchDarklyBundle\InviqaLaunchDarklyBundle;
+use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
+use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 class AppKernel extends Kernel
 {
-    private $loadingClosure;
+    private ?\Closure $loadingClosure = null;
+    private ?string $id = null;
+
+    public function __construct(string $environment, bool $debug)
+    {
+        parent::__construct($environment, $debug);
+    }
 
     public function registerBundles()
     {
         return [
-            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new FrameworkBundle(),
             new TwigBundle(),
-            new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(),
+            new WebProfilerBundle(),
             new InviqaLaunchDarklyBundle,
+            new FriendsOfBehatSymfonyExtensionBundle(),
         ];
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__ . '/config.yml');
-        if (isset($this->loadingClosure)) {
+        if ($this->loadingClosure) {
             $loader->load($this->loadingClosure);
         }
     }
 
     public function loadConfig(\Closure $closure)
     {
+        $this->id = uniqid();
         $this->loadingClosure = $closure;
+        $this->shutdown();
+        $this->container = null;
         $this->booted = false;
         $this->boot();
     }
 
     public function clearConfig()
     {
-        unset($this->loadingClosure);
+        $this->id = null;
+        $this->loadingClosure = null;
         $this->booted = false;
     }
 
-    /**
-     * Remove caching of container to ensure passed config is used
-     */
-    protected function initializeContainer()
+    public function getCacheDir()
     {
-        $container = $this->buildContainer();
-        $container->compile();
-
-        $this->container = $container;
-        $this->container->set('kernel', $this);
-        if ($this->container->has('cache_warmer')) {
-            $this->container->get('cache_warmer')->warmUp($this->container->getParameter('kernel.cache_dir'));
+        $dir = parent::getCacheDir();
+        if ($this->id) {
+            $dir .= $this->id;
         }
+        return $dir;
     }
 
 }

@@ -1,0 +1,48 @@
+_wdt:
+    resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
+    prefix:   /_wdt
+
+_profiler:
+    resource: "@WebProfilerBundle/Resources/config/routing/profiler.xml"
+    prefix:   /_profiler
+
+
+home:
+    path: /
+    controller: Inviqa\LaunchDarklyBundle\Tests\TestController::indexAction
+    methods: [GET]
+
+templated:
+    path: /templated
+    controller: Inviqa\LaunchDarklyBundle\Tests\TestController::templatedAction
+    methods: [GET]
+
+service:
+    path: /service
+    controller: Inviqa\LaunchDarklyBundle\Tests\TestController::serviceAction
+    methods: [GET]
+
+static:
+    path: /static
+    controller: Inviqa\LaunchDarklyBundle\Tests\TestController::staticAction
+    methods: [GET]
+
+aliased:
+    path: /aliased
+    controller: Inviqa\LaunchDarklyBundle\Tests\TestController::aliasedServiceAction
+    methods: [GET]
+
+tagged:
+    path: /tagged
+    controller: Inviqa\LaunchDarklyBundle\Tests\TestController::taggedServiceAction
+    methods: [GET]
+
+home_user:
+    path: /homepage-user
+    controller: Inviqa\LaunchDarklyBundle\Tests\TestController::indexUserAction
+    methods: [GET]
+
+static_user:
+    path: /static-user
+    controller: Inviqa\LaunchDarklyBundle\Tests\TestController::staticUserAction
+    methods: [GET]

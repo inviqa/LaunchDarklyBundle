@@ -1,22 +1,51 @@
 <?php
 
+namespace Inviqa\LaunchDarklyBundle\Tests;
+
 use Inviqa\LaunchDarklyBundle\Client\StaticClient;
 use Inviqa\LaunchDarklyBundle\Client\ExplicitUser\StaticClient as UserStaticClient;
 use LaunchDarkly\LDUser;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class TestController extends Controller
+class TestController extends AbstractController
 {
+    private $client;
+    private $userClient;
+    private $testService;
+    private $aliasedTestService;
+    private $taggedTestService;
+
+    public function __construct(
+        $client,
+        $userClient,
+        $testService,
+        $aliasedTestService,
+        $taggedTestService
+    ) {
+        $this->client = $client;
+        $this->userClient = $userClient;
+        $this->testService = $testService;
+        $this->aliasedTestService = $aliasedTestService;
+        $this->taggedTestService = $taggedTestService;
+    }
+
+    public function setContainer(ContainerInterface $container): ?ContainerInterface
+    {
+        $this->container = $container;
+        return $container;
+    }
+
     public function indexAction() {
-        if ($this->get('inviqa_launchdarkly.client')->variation('new-homepage-content')) {
+        if ($this->client->variation('new-homepage-content')) {
             return new Response("<html><body>the new homepage content</body></html>");
         }
         return new Response("<html><body>the old homepage content</body></html>");
     }
 
     public function indexUserAction() {
-        if ($this->get('inviqa_launchdarkly.user_client')->variation('new-homepage-user-content', new LDUser('user-id'))) {
+        if ($this->userClient->variation('new-homepage-user-content', new LDUser('user-id'))) {
             return new Response("<html><body>the new homepage user content</body></html>");
         }
         return new Response("<html><body>the old homepage user content</body></html>");
@@ -27,15 +56,15 @@ class TestController extends Controller
     }
 
     public function serviceAction() {
-        return new Response($this->get('inviqa_launchdarkly.test_service')->getContent());
+        return new Response($this->testService->getContent());
     }
 
     public function aliasedServiceAction() {
-        return new Response($this->get('inviqa_launchdarkly.aliased_test_service')->getContent());
+        return new Response($this->aliasedTestService->getContent());
     }
 
     public function taggedServiceAction() {
-        return new Response($this->get('inviqa_launchdarkly.tagged_test_service')->getContent());
+        return new Response($this->taggedTestService->getContent());
     }
 
     public function staticAction() {
