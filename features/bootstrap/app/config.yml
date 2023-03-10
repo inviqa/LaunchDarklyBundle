@@ -55,6 +55,7 @@ services:
     Inviqa\LaunchDarklyBundle\Tests\TestController:
         class: \Inviqa\LaunchDarklyBundle\Tests\TestController
         arguments:
+            - "@twig"
             - "@inviqa_launchdarkly.client"
             - "@inviqa_launchdarkly.user_client"
             - "@inviqa_launchdarkly.test_service"
@@ -62,10 +63,10 @@ services:
             - "@inviqa_launchdarkly.tagged_test_service"
         tags: ['controller.service_arguments', 'controller.service_subscriber']
         calls:
-            - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setContainer, ['@service_container']]
 
     FeatureContext:
         class: FeatureContext
         public: true
         calls:
-            - [setContainer, ['@Psr\Container\ContainerInterface']]
+            - [setContainer, ['@service_container']]
