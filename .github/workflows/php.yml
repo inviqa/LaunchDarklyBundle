@@ -13,6 +13,7 @@ jobs:
       matrix:
         php-versions: ['7.4', '8.1']
         symfony-version: ['^5.0', '^6.0']
+      fail-fast: false
     name: PHP ${{ matrix.php-versions }} Test with Symfony ${{ matrix.symfony-version }}
 
     steps:
