@@ -14,13 +14,17 @@
     ],
     "require": {
         "launchdarkly/launchdarkly-php": "^3.7",
-        "symfony/dependency-injection": "^4.2 | ^5.2",
-        "symfony/expression-language": "^4.2 | ^5.2"
+        "symfony/dependency-injection": "^4.2 | ^5.2 | ^6.0",
+        "symfony/expression-language": "^4.2 | ^5.2 | ^6.0"
 
     },
     "autoload": {
         "psr-4": {
-            "Inviqa\\LaunchDarklyBundle\\": "",
+            "Inviqa\\LaunchDarklyBundle\\": ""
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Inviqa\\LaunchDarklyBundle\\Tests\\": "features\\bootstrap\\app"
         }
     },

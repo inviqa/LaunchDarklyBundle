@@ -3,3 +3,4 @@ features/bootstrap/app/cache/*
 features/bootstrap/app/logs/*
 bin/*
 var/*
+composer.lock
