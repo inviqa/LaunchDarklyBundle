@@ -56,7 +56,7 @@ class AppKernel extends Kernel
         $this->booted = false;
     }
 
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         $dir = parent::getCacheDir();
         if ($this->id) {
