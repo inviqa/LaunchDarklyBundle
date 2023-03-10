@@ -11,8 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.4', '8.1']
+        php-versions: ['7.4', '8.0', '8.1']
         symfony-version: ['^5.0', '^6.0']
+        exclude:
+          - php-versions: '7.4'
+            symfony-version: '^6.0'
       fail-fast: false
     name: PHP ${{ matrix.php-versions }} Test with Symfony ${{ matrix.symfony-version }}
 
