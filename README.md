@@ -1,5 +1,7 @@
 # LaunchDarkly Bundle
 
+![tests](https://github.com/countxvat/LaunchDarklyBundle/actions/workflows/php.yml/badge.svg?branch=master)
+
 ## Note
 
 This is not a stable release, there may well be things that need fixing and B/C breaks to come.
