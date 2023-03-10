@@ -1,4 +1,4 @@
-name: PHP Composer
+name: Tests
 
 on: [push, pull_request]
 
@@ -39,11 +39,11 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
-
     - name: Install test dependencies
       run: composer require --dev symfony/twig-bundle:${{ matrix.symfony-version }} symfony/framework-bundle:${{ matrix.symfony-version }} symfony/web-profiler-bundle:${{ matrix.symfony-version }}
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
 
     - name: Run phpunit tests
       run: ./vendor/bin/phpunit
