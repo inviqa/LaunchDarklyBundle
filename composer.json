@@ -1,9 +1,15 @@
 {
     "name": "countxvat/launchdarkly-bundle",
+    "description": "LaunchDarkly integration for Symfony",
+    "license": "MIT",
     "authors": [
         {
-            "name": "richardmiller",
-            "email": "rmiller@inviqa.com"
+            "name": "debesha",
+            "email": "dmytro.malyshenko@countx.com"
+        },
+        {
+            "name": "zviryatko",
+            "email": "oleksandr.davyskyba@countx.com"
         }
     ],
     "require": {
@@ -17,9 +23,6 @@
             "Inviqa\\LaunchDarklyBundle\\": "",
             "Inviqa\\LaunchDarklyBundle\\Tests\\": "features\\bootstrap\\app"
         }
-    },
-    "config": {
-        "bin-dir": "bin/"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0",
