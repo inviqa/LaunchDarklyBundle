@@ -290,3 +290,4 @@ You can also use the full client service to access other methods on the LDClient
 * Integration with event listeners/subscribers to allow registering dependant on flag value
 * Integration with security to allow things with roles to be dependant on flag values if that makes sense
 as a useful thing
+* Revitalise the project
